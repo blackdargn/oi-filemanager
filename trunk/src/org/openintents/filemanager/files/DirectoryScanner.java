@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.openintents.filemanager.PreferenceActivity;
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.util.FileUtils;
 import org.openintents.filemanager.util.MimeTypes;
 
@@ -18,6 +17,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
+
+import com.dm.oifilemgr.R;
 
 public class DirectoryScanner extends Thread {
 	/** List of contents is ready. */

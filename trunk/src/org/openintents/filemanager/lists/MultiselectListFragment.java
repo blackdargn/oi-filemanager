@@ -2,7 +2,6 @@ package org.openintents.filemanager.lists;
 
 import java.util.ArrayList;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.util.MenuUtils;
 import org.openintents.filemanager.view.LegacyActionContainer;
@@ -16,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.dm.oifilemgr.R;
 
 /**
  * Dedicated file list fragment, used for multiple selection on platforms older than Honeycomb.

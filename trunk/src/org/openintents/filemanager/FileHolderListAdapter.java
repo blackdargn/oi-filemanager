@@ -13,6 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dm.oifilemgr.R;
+
 public class FileHolderListAdapter extends BaseAdapter {
 	private List<FileHolder> mItems;
 	private LayoutInflater mInflater;

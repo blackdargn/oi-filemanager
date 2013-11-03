@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.files.FileHolder;
 
 import android.app.ProgressDialog;
@@ -21,6 +20,8 @@ import android.content.DialogInterface.OnDismissListener;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.dm.oifilemgr.R;
 
 public class CompressManager {
 	/**

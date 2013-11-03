@@ -6,12 +6,13 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.files.FileHolder;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import com.dm.oifilemgr.R;
 
 /**
  * This class helps simplify copying and moving of files and folders by providing a simple interface to the operations and handling the actual operation transparently.

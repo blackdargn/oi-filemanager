@@ -3,13 +3,13 @@ package org.openintents.filemanager.search;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import org.openintents.filemanager.R;
-
 import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
+
+import com.dm.oifilemgr.R;
 
 /**
  * Provides the search core, used by every search subsystem that provides results.

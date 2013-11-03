@@ -3,21 +3,20 @@ package org.openintents.filemanager.view;
 import java.io.File;
 import java.util.HashMap;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.view.PathBar.Mode;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnLongClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import com.dm.oifilemgr.R;
 
 /**
  * This class handles the displaying of children in {@link Mode.STANDARD_INPUT}, including choosing which children to display, how, and where. It automatically uses the {@link PathBar#mCurrentDirectory} field. <b>Note: </b> Never use this with

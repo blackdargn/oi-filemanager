@@ -3,7 +3,6 @@ package org.openintents.filemanager.dialogs;
 import java.io.File;
 import java.util.List;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.lists.FileListFragment;
 import org.openintents.filemanager.util.MediaScannerUtils;
@@ -19,6 +18,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
+
+import com.dm.oifilemgr.R;
 
 public class MultiDeleteDialog extends DialogFragment {
 	private List<FileHolder> mFileHolders;

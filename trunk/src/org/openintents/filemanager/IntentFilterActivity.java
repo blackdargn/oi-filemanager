@@ -17,6 +17,8 @@ import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 
+import com.dm.oifilemgr.R;
+
 public class IntentFilterActivity extends FragmentActivity {
 	private FileListFragment mFragment;
 

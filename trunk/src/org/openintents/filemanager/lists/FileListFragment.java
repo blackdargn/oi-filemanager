@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.openintents.filemanager.FileHolderListAdapter;
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.files.DirectoryContents;
 import org.openintents.filemanager.files.DirectoryScanner;
 import org.openintents.filemanager.files.FileHolder;
@@ -24,6 +23,8 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ViewFlipper;
+
+import com.dm.oifilemgr.R;
 
 /**
  * A {@link ListFragment} that displays the contents of a directory.

@@ -1,6 +1,5 @@
 package org.openintents.filemanager.dialogs;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.util.UIUtils;
 
 import android.app.AlertDialog;
@@ -8,6 +7,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+
+import com.dm.oifilemgr.R;
 
 public class OverwriteFileDialog extends DialogFragment {
 	

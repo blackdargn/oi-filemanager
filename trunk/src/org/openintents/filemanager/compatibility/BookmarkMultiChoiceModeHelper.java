@@ -1,12 +1,12 @@
 package org.openintents.filemanager.compatibility;
 
-import org.openintents.filemanager.R;
-
 import android.content.Context;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.ListView;
+
+import com.dm.oifilemgr.R;
 
 public class BookmarkMultiChoiceModeHelper {
 

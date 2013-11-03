@@ -39,6 +39,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.dm.oifilemgr.R;
+
 public class FileManagerActivity extends DistributionLibraryFragmentActivity {
 	private static final String FRAGMENT_TAG = "ListFragment";
     

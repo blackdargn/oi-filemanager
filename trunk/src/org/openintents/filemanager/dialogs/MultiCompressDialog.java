@@ -3,7 +3,6 @@ package org.openintents.filemanager.dialogs;
 import java.io.File;
 import java.util.List;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.dialogs.OverwriteFileDialog.Overwritable;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.lists.FileListFragment;
@@ -22,6 +21,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.dm.oifilemgr.R;
 
 public class MultiCompressDialog extends DialogFragment implements Overwritable {
 	private List<FileHolder> mFileHolders;

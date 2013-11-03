@@ -21,8 +21,8 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +34,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.ImageView;
+
+import com.dm.oifilemgr.R;
 
 public class ThumbnailLoader {
 	private static final String MIME_APK = "application/vnd.android.package-archive";

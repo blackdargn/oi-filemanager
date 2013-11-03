@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dm.oifilemgr.R;
+
 /**
  * Extension of {@link FileHolderListAdapter} that displays checkable items.
  * @author George Venios.

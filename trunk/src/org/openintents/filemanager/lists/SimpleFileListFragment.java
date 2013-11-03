@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import org.openintents.filemanager.FileManagerApplication;
 import org.openintents.filemanager.PreferenceActivity;
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.compatibility.ActionbarRefreshHelper;
 import org.openintents.filemanager.compatibility.FileMultiChoiceModeHelper;
 import org.openintents.filemanager.dialogs.CreateDirectoryDialog;
@@ -35,6 +34,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.dm.oifilemgr.R;
 
 /**
  * A file list fragment that supports context menu and CAB selection. 

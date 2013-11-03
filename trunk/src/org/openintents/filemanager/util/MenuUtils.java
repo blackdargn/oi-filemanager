@@ -8,7 +8,6 @@ import org.openintents.filemanager.FileManagerActivity;
 import org.openintents.filemanager.FileManagerApplication;
 import org.openintents.filemanager.FileManagerProvider;
 import org.openintents.filemanager.PreferenceActivity;
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.bookmarks.BookmarksProvider;
 import org.openintents.filemanager.compatibility.ActionbarRefreshHelper;
 import org.openintents.filemanager.dialogs.DetailsDialog;
@@ -48,6 +47,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
+import com.dm.oifilemgr.R;
 
 /**
  * Utility class that helps centralize multiple and single selection actions for all API levels.

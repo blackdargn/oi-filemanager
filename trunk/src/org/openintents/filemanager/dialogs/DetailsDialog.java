@@ -2,7 +2,6 @@ package org.openintents.filemanager.dialogs;
 
 import java.io.File;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.util.FileUtils;
 import org.openintents.filemanager.util.UIUtils;
@@ -17,6 +16,8 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.dm.oifilemgr.R;
 
 public class DetailsDialog extends DialogFragment {
 	private FileHolder mFileHolder;

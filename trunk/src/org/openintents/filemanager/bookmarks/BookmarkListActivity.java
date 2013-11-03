@@ -1,6 +1,5 @@
 package org.openintents.filemanager.bookmarks;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.compatibility.HomeIconHelper;
 import org.openintents.filemanager.util.UIUtils;
 

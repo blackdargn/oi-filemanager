@@ -2,7 +2,6 @@ package org.openintents.filemanager.dialogs;
 
 import java.io.File;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.dialogs.OverwriteFileDialog.Overwritable;
 import org.openintents.filemanager.lists.FileListFragment;
 import org.openintents.filemanager.util.UIUtils;
@@ -21,6 +20,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dm.oifilemgr.R;
 
 public class CreateDirectoryDialog extends DialogFragment implements Overwritable {
 	private File mIn;

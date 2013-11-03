@@ -20,13 +20,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openintents.filemanager.R;
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.XmlResourceParser;
 import android.webkit.MimeTypeMap;
+
+import com.dm.oifilemgr.R;
 
 public class MimeTypes {
 

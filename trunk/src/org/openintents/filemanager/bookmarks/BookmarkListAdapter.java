@@ -3,7 +3,6 @@ package org.openintents.filemanager.bookmarks;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.ThumbnailLoader;
 import org.openintents.filemanager.files.FileHolder;
 
@@ -13,10 +12,11 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebIconDatabase.IconListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.dm.oifilemgr.R;
 
 /**
  * @author George Venios
