@@ -2,8 +2,6 @@ package org.openintents.filemanager.view;
 
 import java.io.File;
 
-import org.openintents.filemanager.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -23,6 +21,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
+import com.dm.oifilemgr.R;
 
 /**
  * Provides a self contained way to represent the current path and provides a handy way of navigating. </br></br>

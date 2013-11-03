@@ -23,6 +23,8 @@ import android.os.Environment;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.dm.oifilemgr.R;
+
 public class SaveAsActivity extends Activity {
 	protected static final int REQUEST_CODE_PICK_FILE_OR_DIRECTORY = 1;
 	private Uri source;

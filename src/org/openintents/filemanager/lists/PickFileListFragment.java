@@ -4,7 +4,6 @@ import java.io.File;
 
 import org.openintents.filemanager.FileManagerProvider;
 import org.openintents.filemanager.PreferenceActivity;
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.view.PickBar;
 import org.openintents.filemanager.view.PickBar.OnPickRequestedListener;
@@ -21,6 +20,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.dm.oifilemgr.R;
 
 public class PickFileListFragment extends SimpleFileListFragment{
 	private PickBar mPickBar;

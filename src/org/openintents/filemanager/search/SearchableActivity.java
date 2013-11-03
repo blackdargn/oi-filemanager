@@ -1,7 +1,6 @@
 package org.openintents.filemanager.search;
 
 import org.openintents.filemanager.FileManagerActivity;
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.compatibility.HomeIconHelper;
 import org.openintents.filemanager.util.UIUtils;
 import org.openintents.intents.FileManagerIntents;
@@ -23,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
+
+import com.dm.oifilemgr.R;
 
 /**
  * The activity that handles queries and shows search results. 

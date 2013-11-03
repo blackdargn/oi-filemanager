@@ -20,7 +20,6 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Date;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.files.FileHolder;
 
 import android.content.ActivityNotFoundException;
@@ -33,6 +32,8 @@ import android.text.format.DateFormat;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.dm.oifilemgr.R;
 
 /**
  * @version 2009-07-03

@@ -1,14 +1,15 @@
 package org.openintents.filemanager.compatibility;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.bookmarks.BookmarkListAdapter;
 import org.openintents.filemanager.bookmarks.BookmarksProvider;
 
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ListView;
+
+import com.dm.oifilemgr.R;
 
 public class BookmarkListActionHandler {
 	/**

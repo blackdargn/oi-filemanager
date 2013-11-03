@@ -20,6 +20,8 @@ import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.dm.oifilemgr.R;
+
 public class FileManagerProvider extends ContentProvider {
 
 	public static final String FILE_PROVIDER_PREFIX = "content://org.openintents.filemanager";

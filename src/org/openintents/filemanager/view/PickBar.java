@@ -1,7 +1,5 @@
 package org.openintents.filemanager.view;
 
-import org.openintents.filemanager.R;
-
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Bundle;
@@ -15,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.dm.oifilemgr.R;
 
 public class PickBar extends LinearLayout {
 	private EditText mEditText;

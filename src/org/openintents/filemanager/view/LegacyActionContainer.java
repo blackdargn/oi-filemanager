@@ -1,7 +1,5 @@
 package org.openintents.filemanager.view;
 
-import org.openintents.filemanager.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -13,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.dm.oifilemgr.R;
 
 public class LegacyActionContainer extends LinearLayout {
 	private Menu menu = null;

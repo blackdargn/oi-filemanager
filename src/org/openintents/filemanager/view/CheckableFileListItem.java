@@ -1,13 +1,13 @@
 package org.openintents.filemanager.view;
 
-import org.openintents.filemanager.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.RelativeLayout;
+
+import com.dm.oifilemgr.R;
 
 /**
  * An extension to the item_filelist layout that implements the checkable interface and displays a {@link CheckBox} to the right of the standard layout.

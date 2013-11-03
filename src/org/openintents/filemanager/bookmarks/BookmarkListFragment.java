@@ -1,6 +1,5 @@
 package org.openintents.filemanager.bookmarks;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.compatibility.BookmarkListActionHandler;
 import org.openintents.filemanager.compatibility.BookmarkMultiChoiceModeHelper;
 
@@ -13,8 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ListView;
+
+import com.dm.oifilemgr.R;
 
 /**
  * @author George Venios

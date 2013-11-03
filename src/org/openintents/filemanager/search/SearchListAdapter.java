@@ -3,7 +3,6 @@ package org.openintents.filemanager.search;
 import java.io.File;
 import java.util.HashMap;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.view.ViewHolder;
 
@@ -15,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.dm.oifilemgr.R;
 
 /**
  * Simple adapter for displaying search results.

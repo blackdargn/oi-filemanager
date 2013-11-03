@@ -1,9 +1,9 @@
 package org.openintents.filemanager.util;
 
-import org.openintents.filemanager.R;
-
 import android.app.Activity;
 import android.preference.PreferenceManager;
+
+import com.dm.oifilemgr.R;
 
 public abstract class UIUtils {
 

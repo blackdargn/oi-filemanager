@@ -34,6 +34,8 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.dm.oifilemgr.R;
+
 public class PreferenceActivity extends android.preference.PreferenceActivity
                                 implements OnSharedPreferenceChangeListener {
 

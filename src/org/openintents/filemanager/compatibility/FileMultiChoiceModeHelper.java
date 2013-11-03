@@ -2,7 +2,6 @@ package org.openintents.filemanager.compatibility;
 
 import java.util.ArrayList;
 
-import org.openintents.filemanager.R;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.lists.SimpleFileListFragment;
 import org.openintents.filemanager.util.MenuUtils;
@@ -12,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.ListView;
+
+import com.dm.oifilemgr.R;
 
 /**
  * This class helps wrap some of the platform specific logic of MultiChoiceMode of Honeycomb and up, 
