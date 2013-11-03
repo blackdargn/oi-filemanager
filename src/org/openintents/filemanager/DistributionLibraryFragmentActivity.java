@@ -1,11 +1,14 @@
 package org.openintents.filemanager;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class DistributionLibraryFragmentActivity extends FragmentActivity{
+import com.dm.oifilemgr.R;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+
+public class DistributionLibraryFragmentActivity extends SlidingFragmentActivity{
 
 	static final int MENU_DISTRIBUTION_START = Menu.FIRST;
 	
@@ -13,8 +16,16 @@ public class DistributionLibraryFragmentActivity extends FragmentActivity{
 	
     /** Called when the activity is first created. */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        // configure the SlidingMenu
+        setBehindContentView(R.layout.menu_main);
+        SlidingMenu menu = getSlidingMenu();
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);       
+        menu.setFadeDegree(0.35f);
+        menu.setBehindWidth(40);
     }
 
  	@Override
