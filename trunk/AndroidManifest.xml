@@ -66,7 +66,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Launch"
-        android:name="FileManagerApplication">
+        android:name="org.openintents.filemanager.FileManagerApplication">
 
         <!-- aTrackDog metadata -->
         <meta-data
@@ -77,7 +77,7 @@
             android:resource="@xml/about" />
 
         <activity
-            android:name=".FileManagerActivity"
+            android:name="org.openintents.filemanager.FileManagerActivity"
             android:configChanges="orientation"
             android:label="@string/app_name" >
             <intent-filter>
@@ -93,17 +93,17 @@
                 <data android:scheme="file" />
             </intent-filter>
             <meta-data android:name="android.app.default_searchable"
-                   android:value=".search.SearchableActivity" />
+                   android:value="org.openintents.filemanager.search.SearchableActivity" />
         </activity>
-        <activity android:name=".bookmarks.BookmarkListActivity" android:label="@string/bookmarks" >
+        <activity android:name="org.openintents.filemanager.bookmarks.BookmarkListActivity" android:label="@string/bookmarks" >
         </activity>
         <activity
-            android:name=".PreferenceActivity"
+            android:name="org.openintents.filemanager.PreferenceActivity"
             android:label="@string/settings" />
 
         <!-- Filters for the Save as feature -->
         <activity
-            android:name=".SaveAsActivity"
+            android:name="org.openintents.filemanager.SaveAsActivity"
             android:label="Save as" >
 
             <!-- Save as a file: scheme (e.g. After downloading attachment in GMail -->
@@ -143,19 +143,19 @@
         </activity>
 
         <provider
-            android:name=".bookmarks.BookmarksProvider"
+            android:name="org.openintents.filemanager.bookmarks.BookmarksProvider"
             android:authorities="org.openintents.filemanager.bookmarks" >
         </provider>
         <provider
-            android:name=".search.SearchResultsProvider"
+            android:name="org.openintents.filemanager.search.SearchResultsProvider"
             android:authorities="org.openintents.filemanager.search" >
         </provider>
         <provider
-            android:name=".search.SearchSuggestionsProvider"
+            android:name="org.openintents.filemanager.search.SearchSuggestionsProvider"
             android:authorities="org.openintents.filemanager.search.suggest" >
         </provider>
         <provider
-            android:name=".FileManagerProvider"
+            android:name="org.openintents.filemanager.FileManagerProvider"
             android:authorities="org.openintents.filemanager" >
         </provider>
 
@@ -175,9 +175,9 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <provider android:name=".search.RecentsSuggestionsProvider" android:authorities="org.openintents.filemanager.search.SuggestionProvider"></provider>
-        <service android:name=".search.SearchService"></service>
-        <activity android:name=".IntentFilterActivity"  >
+        <provider android:name="org.openintents.filemanager.search.RecentsSuggestionsProvider" android:authorities="org.openintents.filemanager.search.SuggestionProvider"></provider>
+        <service android:name="org.openintents.filemanager.search.SearchService"></service>
+        <activity android:name="org.openintents.filemanager.IntentFilterActivity"  >
             <intent-filter>
                 <action android:name="org.openintents.action.PICK_FILE" />
 

@@ -1,8 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:orientation="vertical">
     <org.openintents.filemanager.view.PathBar
         android:id="@+id/pathbar"
         android:background="?com.dm.oifilemgr:attr/pathBarBackground"
@@ -11,5 +15,13 @@
     </org.openintents.filemanager.view.PathBar>
 
     <include layout="@layout/filelist"/>
+    </LinearLayout>
+    <ImageView 
+        android:id="@+id/btn_menu"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:src="@drawable/ic_navbar_home"/>
     
-</LinearLayout>
+</RelativeLayout>

@@ -17,6 +17,7 @@ import org.openintents.filemanager.view.PathBar.Mode;
 import org.openintents.filemanager.view.PathBar.OnDirectoryChangedListener;
 import org.openintents.intents.FileManagerIntents;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Build.VERSION;
@@ -36,6 +37,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.dm.oifilemgr.R;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 /**
  * A file list fragment that supports context menu and CAB selection. 
@@ -81,6 +83,19 @@ public class SimpleFileListFragment extends FileListFragment {
 		// Removed else clause as the other mode is the default. It seems faster this way on Nexus S.
 		
 		initContextualActions();
+		// menu click
+		view.findViewById(R.id.btn_menu).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Activity act = getActivity().getParent();
+                if(act instanceof SlidingFragmentActivity) {
+                    SlidingFragmentActivity activity = (SlidingFragmentActivity)act;
+                    activity.getSlidingMenu().toggle();
+                }
+            }
+        });
 	}
 	
 	/**
