@@ -5,7 +5,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Checkable;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.dm.oifilemgr.R;
 
@@ -15,8 +17,13 @@ import com.dm.oifilemgr.R;
  *
  */
 public class CheckableFileListItem extends RelativeLayout implements Checkable{
-	private CheckBox mCheckbox;
-	
+    
+    public CheckBox mCheckbox;
+	public ImageView icon;
+    public TextView primaryInfo;
+    public TextView secondaryInfo;
+    public TextView tertiaryInfo;
+    
 	public CheckableFileListItem(Context context) {
 		super(context);
 		init();
@@ -45,6 +52,11 @@ public class CheckableFileListItem extends RelativeLayout implements Checkable{
 		
 		addView(mCheckbox);
 		addView(item);
+		
+		icon = (ImageView) item.findViewById(R.id.icon);
+        primaryInfo = (TextView) item.findViewById(R.id.primary_info);
+        secondaryInfo = (TextView) item.findViewById(R.id.secondary_info);
+        tertiaryInfo = (TextView) item.findViewById(R.id.tertiary_info);
 	}
 
 	@Override
@@ -61,7 +73,4 @@ public class CheckableFileListItem extends RelativeLayout implements Checkable{
 	public void toggle() {
 		mCheckbox.toggle();
 	}
-	
-	
-	
 }
