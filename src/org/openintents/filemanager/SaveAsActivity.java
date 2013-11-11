@@ -13,7 +13,6 @@ import java.io.OutputStream;
 import org.openintents.filemanager.util.UIUtils;
 import org.openintents.intents.FileManagerIntents;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,9 +22,10 @@ import android.os.Environment;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.dm.DMActivity;
 import com.dm.oifilemgr.R;
 
-public class SaveAsActivity extends Activity {
+public class SaveAsActivity extends DMActivity {
 	protected static final int REQUEST_CODE_PICK_FILE_OR_DIRECTORY = 1;
 	private Uri source;
 	// Whether the scheme is file: (otherwise it's content:)

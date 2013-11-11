@@ -29,7 +29,7 @@
 	     Applicatio-specific strings
 	     *************************** -->
 	<!-- Name of application. Can be localized. OI = OpenIntents should stay unmodified. -->
-    <string name="app_name">OI File Manager</string>
+    <string name="app_name">文件管家</string>
     
     <string name="menu_delete">Delete</string>
     <string name="menu_rename">Rename</string>

@@ -5,7 +5,6 @@ import org.openintents.filemanager.compatibility.HomeIconHelper;
 import org.openintents.filemanager.util.UIUtils;
 import org.openintents.intents.FileManagerIntents;
 
-import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,6 +22,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
 
+import com.dm.DMListActivity;
 import com.dm.oifilemgr.R;
 
 /**
@@ -32,7 +32,7 @@ import com.dm.oifilemgr.R;
  * @author George Venios
  * 
  */
-public class SearchableActivity extends ListActivity {
+public class SearchableActivity extends DMListActivity {
 	private LocalBroadcastManager lbm;
 	private Cursor searchResults;
 	

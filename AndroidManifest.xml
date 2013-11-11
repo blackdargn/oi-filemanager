@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
-<manifest package="com.dm.oifilemgr"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
-    android:versionCode="28"
-    android:versionName="2.0.3-rc1" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:versionCode="1"
+    android:versionName="1.0"
+    package="com.dm.oifilemgr">
 
     <!--
     History: 
@@ -44,7 +45,7 @@
     -->
 
     <uses-sdk
-        android:minSdkVersion="7"
+        android:minSdkVersion="4"
         android:targetSdkVersion="16" />
     <!--
              If targetSdkVersion is increased from 4 to 5 or higher, 
@@ -53,8 +54,14 @@
             NOTE: Tested on target=9, and it works both on Android 2.3 and Android 1.6.
     -->
 
+	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
@@ -63,7 +70,7 @@
 
     <!-- We use this theme here, so that for the time the user waits for the app to launch, he doesn't get blinded by the white default theme. Proper theme is set onCreate of any Activity. -->
     <application
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_app"
         android:label="@string/app_name"
         android:theme="@style/Theme.Launch"
         android:name="org.openintents.filemanager.FileManagerApplication">
@@ -166,7 +173,7 @@
         <activity
             android:name="org.openintents.distribution.NewVersionActivity"/>
         
-        <activity android:name=".search.SearchableActivity"
+        <activity android:name="org.openintents.filemanager.search.SearchableActivity"
                     android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

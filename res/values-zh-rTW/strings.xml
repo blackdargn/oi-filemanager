@@ -25,19 +25,19 @@
   matif https://launchpad.net/~matif-tw</string>
 	
     <!-- Short explanation of the application (max. 80 characters) -->
-    <string name="about_comments">使用 OI 檔案總管管理 SD card 的檔案</string>  
+    <string name="about_comments">文件管家管理 SD card 的檔案</string>  
 	
 	<!-- ***************************
 	     Applicatio-specific strings
 	     *************************** -->
 	<!-- Name of application. Can be localized. OI = OpenIntents should stay unmodified. -->
-    <string name="app_name">檔案總管</string>
+    <string name="app_name">文件管家</string>
     
     <string name="menu_delete">刪除</string>
     <string name="menu_rename">重新命名</string>
     <string name="menu_send">傳送</string>
     <string name="menu_open">開啟</string>
-    <string name="menu_move">Cut</string>
+    <string name="menu_move">剪切</string>
     <string name="menu_copy">複製</string>
     <string name="menu_details">內容</string>
     <string name="menu_more">更多選項</string>

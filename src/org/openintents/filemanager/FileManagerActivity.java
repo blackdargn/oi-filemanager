@@ -38,7 +38,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
+import com.dm.DMUtil;
 import com.dm.oifilemgr.R;
 
 public class FileManagerActivity extends DistributionLibraryFragmentActivity {
@@ -88,7 +90,10 @@ public class FileManagerActivity extends DistributionLibraryFragmentActivity {
 		
 		// If not called by name, open on the requested location.
 		File data = resolveIntentData();
-			
+		
+		setContentView(R.layout.activity_template);
+		DMUtil.bindView(this, (ViewGroup)findViewById(R.id.btmBarLay), DMUtil.FlexibleInlinePPID2);
+		
 		// Add fragment only if it hasn't already been added.
 		mFragment = (SimpleFileListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 		if(mFragment == null){
@@ -99,13 +104,13 @@ public class FileManagerActivity extends DistributionLibraryFragmentActivity {
 			else
 				args.putString(FileManagerIntents.EXTRA_DIR_PATH, data.toString());
 			mFragment.setArguments(args);
-			getSupportFragmentManager().beginTransaction().add(android.R.id.content, mFragment, FRAGMENT_TAG).commit();
+			getSupportFragmentManager().beginTransaction().add(R.id.containerLay, mFragment, FRAGMENT_TAG).commit();
 		}
 		else {
 			// If we didn't rotate and data wasn't null.
 			if(icicle == null && data!=null)
 				mFragment.openInformingPathBar(new FileHolder(new File(data.toString()), this));
-		}
+		}		
 	}
 
  	@Override
