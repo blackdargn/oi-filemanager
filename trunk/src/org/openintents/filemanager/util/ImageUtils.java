@@ -16,8 +16,7 @@ public final class ImageUtils {
 		int width = drawable.getWidth();
 		int height = drawable.getHeight();
 
-		if (0 < width && 0 < height && desireWidth < width
-				|| desireHeight < height) {
+		if (0 < width && 0 < height && (desireWidth < width|| desireHeight < height)) {
 			// Calculate scale
 			float scale;
 			if (width < height) {
@@ -48,20 +47,16 @@ public final class ImageUtils {
 	 */
 	public static Drawable resizeDrawable(Drawable drawable, int desireWidth,
 			int desireHeight) {
-				Drawable dr = null;
 		int width = drawable.getIntrinsicWidth();
 		int height = drawable.getIntrinsicHeight();
 
-		if (0 < width && 0 < height && desireWidth < width
-				|| desireHeight < height) {
+		if (0 < width && 0 < height && (desireWidth < width || desireHeight < height)) {
 			Bitmap b = ((BitmapDrawable) drawable).getBitmap();
-			Bitmap resized = Bitmap.createScaledBitmap(b, desireWidth,
-					desireHeight, true);
-			dr = new BitmapDrawable(resized);
-
+			Bitmap resized = Bitmap.createScaledBitmap(b, desireWidth,desireHeight, true);
+			drawable = new BitmapDrawable(resized);
 		}
 
-		return dr;
+		return drawable;
 	}
 
 }
