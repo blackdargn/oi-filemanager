@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 public class DistributionLibraryFragmentActivity extends FragmentActivity{
 
@@ -14,6 +15,7 @@ public class DistributionLibraryFragmentActivity extends FragmentActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
     }
 
  	@Override

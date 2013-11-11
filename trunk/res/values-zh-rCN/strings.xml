@@ -27,13 +27,13 @@
   zhangchun https://launchpad.net/~zhangchun</string>
 	
     <!-- Short explanation of the application (max. 80 characters) -->
-    <string name="about_comments">OI文件管理器用来管理SD卡上的文件。</string>  
+    <string name="about_comments">文件管家用来管理SD卡上的文件。</string>  
 	
 	<!-- ***************************
 	     Applicatio-specific strings
 	     *************************** -->
 	<!-- Name of application. Can be localized. OI = OpenIntents should stay unmodified. -->
-    <string name="app_name">OI文件管理器</string>
+    <string name="app_name">文件管家</string>
     
     <string name="menu_delete">删除</string>
     <string name="menu_rename">重命名</string>
