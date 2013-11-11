@@ -18,9 +18,6 @@ package org.openintents.filemanager;
 
 import java.io.File;
 
-import net.simonvt.menudrawer.MenuDrawer;
-import net.simonvt.menudrawer.Position;
-
 import org.openintents.filemanager.bookmarks.BookmarkListActivity;
 import org.openintents.filemanager.compatibility.HomeIconHelper;
 import org.openintents.filemanager.files.FileHolder;
@@ -30,7 +27,6 @@ import org.openintents.filemanager.util.UIUtils;
 import org.openintents.intents.FileManagerIntents;
 import org.openintents.util.MenuIntentOptionsWithIcons;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
@@ -42,7 +38,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.dm.oifilemgr.R;
 
@@ -93,9 +88,7 @@ public class FileManagerActivity extends DistributionLibraryFragmentActivity {
 		
 		// If not called by name, open on the requested location.
 		File data = resolveIntentData();
-		
-		mMenuDrawer.setContentView(R.layout.content_frame);
-		
+			
 		// Add fragment only if it hasn't already been added.
 		mFragment = (SimpleFileListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 		if(mFragment == null){
@@ -106,22 +99,13 @@ public class FileManagerActivity extends DistributionLibraryFragmentActivity {
 			else
 				args.putString(FileManagerIntents.EXTRA_DIR_PATH, data.toString());
 			mFragment.setArguments(args);
-			getSupportFragmentManager().beginTransaction().add(R.id.content_frame, mFragment, FRAGMENT_TAG).commit();
+			getSupportFragmentManager().beginTransaction().add(android.R.id.content, mFragment, FRAGMENT_TAG).commit();
 		}
 		else {
 			// If we didn't rotate and data wasn't null.
 			if(icicle == null && data!=null)
 				mFragment.openInformingPathBar(new FileHolder(new File(data.toString()), this));
-		}		
-		// menu click
-        findViewById(R.id.btn_menu).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                showMenuMain();
-            }
-        });
+		}
 	}
 
  	@Override
