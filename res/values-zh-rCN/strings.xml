@@ -61,7 +61,7 @@
 	<string name="really_delete_multiselect">确定要删除文件%d？</string>
 
     <string name="multiselect_title">选择多个文件</string>
-    <string name="pick_title">File picker</string>
+    <string name="pick_title">文件选取</string>
     
     <!-- Strings for details table -->
     <string name="details_type">类型</string>
