@@ -33,6 +33,11 @@ public class FileHolderListAdapter extends BaseAdapter {
 		mThumbnailLoader = new ThumbnailLoader(c);
 	}
 	
+	public void setList(List<FileHolder> files) {
+	    mItems = files;
+	    notifyDataSetChanged();
+	}
+	
 	public Context getContext(){
 		return mContext;
 	}

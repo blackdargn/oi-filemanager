@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,7 @@ public abstract class FileListFragment extends ListFragment {
 	protected FileHolderListAdapter mAdapter;
 	protected DirectoryScanner mScanner;
 	protected ArrayList<FileHolder> mFiles = new ArrayList<FileHolder>();
+	protected ArrayList<FileHolder> mFilterFiles = new ArrayList<FileHolder>();
 	private String mPath;
 	private String mFilename;
 
@@ -222,8 +224,7 @@ public abstract class FileListFragment extends ListFragment {
 					selectInList(mPreviousDirectory);
 				} else {
 					// Reset list position.
-					if (mFiles.size() > 0)
-						getListView().setSelection(0);					
+//					if (mFiles.size() > 0) getListView().setSelection(0);					
 				}
 				setLoading(false);
 				break;
@@ -265,6 +266,21 @@ public abstract class FileListFragment extends ListFragment {
 			mPath = dir.getAbsolutePath();
 			
 		}
+	}
+	
+	/** 过滤文件*/
+	public void filterPath(String str) {
+	    mFilterFiles.clear();
+	    if(!TextUtils.isEmpty(str)) {
+    	    for(FileHolder file : mFiles) {
+    	        if(file.getName().indexOf(str) != -1) {
+    	            mFilterFiles.add(file);
+    	        }
+    	    }
+    	    mAdapter.setList(mFilterFiles);
+	    }else {
+	        mAdapter.setList(mFiles);
+	    }
 	}
 
 	private void pathCheckAndFix() {
