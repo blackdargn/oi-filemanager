@@ -19,9 +19,8 @@ public class BookmarksProvider extends ContentProvider implements BaseColumns{
     public static final String NAME = "name";
     public static final String PATH = "path";
     public static final String CHECKED = "checked"; //Only because of multiple choice delete dialog
-    public static final String PROVIDER_NAME = "org.openintents.filemanager.bookmarks";
-    public static final Uri CONTENT_URI = 
-            Uri.parse("content://"+PROVIDER_NAME);
+    public static final String PROVIDER_NAME = "com.dm.oifilemgr.bookmarks";
+    public static final Uri CONTENT_URI = Uri.parse("content://"+PROVIDER_NAME);
     public static final String BOOKMARK_MIMETYPE =
     		"vnd.android.cursor.item/vnd.openintents.bookmark";
     public static final String BOOKMARKS_MIMETYPE =

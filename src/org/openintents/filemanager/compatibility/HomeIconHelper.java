@@ -7,7 +7,9 @@ import android.content.Intent;
 
 public class HomeIconHelper {
 	public static void activity_actionbar_setHomeButtonEnabled(Activity act){
-		act.getActionBar().setHomeButtonEnabled(true);
+	    if(act != null && act.getActionBar() != null){
+	        act.getActionBar().setHomeButtonEnabled(true);
+	    }
 	}
 	
 	public static void activity_actionbar_setDisplayHomeAsUpEnabled(Activity act){

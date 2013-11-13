@@ -26,7 +26,7 @@ public class FileManagerProvider extends ContentProvider {
 
 	public static final String FILE_PROVIDER_PREFIX = "content://org.openintents.filemanager";
 	private static final String TAG = "FileManagerProvider";
-	public static final String AUTHORITY = "org.openintents.filemanager";
+	public static final String AUTHORITY = "com.dm.oifilemgr";
 	private MimeTypes mMimeTypes;
 
 	@Override

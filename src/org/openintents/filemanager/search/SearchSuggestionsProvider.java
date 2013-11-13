@@ -19,7 +19,7 @@ import android.provider.BaseColumns;
  */
 public class SearchSuggestionsProvider extends ContentProvider {
 	public static final String SEARCH_SUGGEST_MIMETYPE = "vnd.android.cursor.item/vnd.openintents.search_suggestion";
-	public static final String PROVIDER_NAME = "org.openintents.filemanager.search.suggest";
+	public static final String PROVIDER_NAME = "com.dm.oifilemgr.search.suggest";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME);
 
 	private static final long MAX_NANOS = 2000000;
