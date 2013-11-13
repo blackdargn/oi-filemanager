@@ -1,5 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
+     <item
+        android:id="@+id/menu_add_bookmarks"
+        android:alphabeticShortcut="a"
+        android:icon="@drawable/ic_action_add_bookmark"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_add_bookmarks"/>
     <item
         android:id="@+id/menu_multiselect"
         android:alphabeticShortcut="m"

@@ -261,23 +261,7 @@ public abstract class MenuUtils {
             return true;
 			
 		case R.id.menu_bookmark:
-			String path = fItem.getFile().getAbsolutePath();
-			Cursor query = context.getContentResolver().query(BookmarksProvider.CONTENT_URI,
-										new String[]{BookmarksProvider._ID},
-										BookmarksProvider.PATH + "=?",
-										new String[]{path},
-										null);
-			if(!query.moveToFirst()){
-				ContentValues values = new ContentValues();
-				values.put(BookmarksProvider.NAME, fItem.getName());
-				values.put(BookmarksProvider.PATH, path);
-				context.getContentResolver().insert(BookmarksProvider.CONTENT_URI, values);
-				Toast.makeText(context, R.string.bookmark_added, Toast.LENGTH_SHORT).show();
-			}
-			else{
-				Toast.makeText(context, R.string.bookmark_already_exists, Toast.LENGTH_SHORT).show();
-			}
-			query.close();
+		    addBookMarker(context, fItem);
 			return true;
 
 		case R.id.menu_more:
@@ -426,5 +410,25 @@ public abstract class MenuUtils {
 							}).create()
 						.show();
 		}
+	}
+	
+	public static void addBookMarker(Context context, FileHolder fItem) {
+        String path = fItem.getFile().getAbsolutePath();
+        Cursor query = context.getContentResolver().query(BookmarksProvider.CONTENT_URI,
+                                    new String[]{BookmarksProvider._ID},
+                                    BookmarksProvider.PATH + "=?",
+                                    new String[]{path},
+                                    null);
+        if(!query.moveToFirst()){
+            ContentValues values = new ContentValues();
+            values.put(BookmarksProvider.NAME, fItem.getName());
+            values.put(BookmarksProvider.PATH, path);
+            context.getContentResolver().insert(BookmarksProvider.CONTENT_URI, values);
+            Toast.makeText(context, R.string.bookmark_added, Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(context, R.string.bookmark_already_exists, Toast.LENGTH_SHORT).show();
+        }
+        query.close();
 	}
 }

@@ -20,7 +20,8 @@ import android.util.Log;
 
 import com.dm.oifilemgr.R;
 
-public class DirectoryScanner extends Thread {
+//  extends Thread
+public class DirectoryScanner {
 	/** List of contents is ready. */
 	public static final int MESSAGE_SHOW_DIRECTORY_CONTENTS = 500;	// List of contents is ready, obj = DirectoryContents
 	public static final int MESSAGE_SET_PROGRESS = 501;	// Set progress bar, arg1 = current value, arg2 = max value
@@ -55,16 +56,21 @@ public class DirectoryScanner extends Thread {
 	private List<FileHolder> listDir, listFile, listSdCard;
 
 	public DirectoryScanner(File directory, Context context, Handler handler, MimeTypes mimeTypes, String filterFiletype, String filterMimetype, boolean writeableOnly, boolean directoriesOnly) {
-		super("Directory Scanner");
-		currentDirectory = directory;
-		this.context = context;
-		this.handler = handler;
-		this.mMimeTypes = mimeTypes;
-		this.mFilterFiletype = filterFiletype;
-		this.mFilterMimetype = filterMimetype;
-		this.mSdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-		this.mWriteableOnly = writeableOnly;
-		this.mDirectoriesOnly = directoriesOnly;
+//		super("Directory Scanner");
+	    setup(directory, context, handler, mimeTypes, filterFiletype, filterMimetype, writeableOnly, directoriesOnly);
+	}
+	
+	public void setup(File directory, Context context, Handler handler, MimeTypes mimeTypes, String filterFiletype, String filterMimetype, boolean writeableOnly, boolean directoriesOnly) {
+	    this.currentDirectory = directory;
+        this.context = context;
+        this.handler = handler;
+        this.mMimeTypes = mimeTypes;
+        this.mFilterFiletype = filterFiletype;
+        this.mFilterMimetype = filterMimetype;
+        this.mSdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        this.mWriteableOnly = writeableOnly;
+        this.mDirectoriesOnly = directoriesOnly;
+        this.cancelled = false;
 	}
 
 	private void init(){
@@ -80,10 +86,11 @@ public class DirectoryScanner extends Thread {
 		files = currentDirectory.listFiles();
 		noMedia = false;
 		displayHidden = PreferenceActivity.getDisplayHiddenFiles(context);
-		sdIcon = context.getResources().getDrawable(R.drawable.ic_launcher_sdcard);
-		folderIcon = context.getResources().getDrawable(R.drawable.ic_launcher_folder);
-		genericFileIcon = context.getResources().getDrawable(R.drawable.ic_launcher_file);
-		
+		if(sdIcon == null) {
+    		sdIcon = context.getResources().getDrawable(R.drawable.ic_launcher_sdcard);
+    		folderIcon = context.getResources().getDrawable(R.drawable.ic_launcher_folder);
+    		genericFileIcon = context.getResources().getDrawable(R.drawable.ic_launcher_file);
+		}
 		operationStartTime = SystemClock.uptimeMillis();
 		
 		if (files == null) {
@@ -93,12 +100,19 @@ public class DirectoryScanner extends Thread {
 		}
 		Log.v(TAG, "Total count=" + totalCount + ")");
 		
-		/** Directory container */
- 		listDir = new ArrayList<FileHolder>(totalCount);
+		/** Directory container */		
+		if(listDir == null) listDir = new ArrayList<FileHolder>(totalCount);
+		listDir.clear();
 		/** File container */
- 		listFile = new ArrayList<FileHolder>(totalCount);
+		if(listFile == null) listFile = new ArrayList<FileHolder>(totalCount);
+		listFile.clear();
 		/** External storage container*/
-		listSdCard = new ArrayList<FileHolder>(3);
+		if(listSdCard == null)  listSdCard = new ArrayList<FileHolder>(3);
+		listSdCard.clear();
+	}
+	
+	public void start() {
+	    run();
 	}
 	
 	public void run() {
