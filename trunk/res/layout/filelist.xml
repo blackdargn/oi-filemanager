@@ -5,7 +5,7 @@
     android:inAnimation="@anim/fade_in"
     android:outAnimation="@anim/fade_out"
     android:isScrollContainer="true" >
-    <LinearLayout
+	<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -57,24 +57,28 @@
             android:gravity="center_vertical">
             <ImageView 
                 android:id="@+id/btn_add_book"
-                android:layout_width="46dip"
-            	android:layout_height="46dip"
-                android:src="@drawable/ic_action_add_bookmark"/>
+                android:layout_width="42dip"
+            	android:layout_height="42dip"
+                android:src="@drawable/ic_action_add_bookmark"
+                android:background="@drawable/btn_default"/>
             <ImageView 
                 android:id="@+id/btn_select"
-                android:layout_width="46dip"
-            	android:layout_height="46dip"
-                android:src="@drawable/ic_action_mark"/>
+                android:layout_width="42dip"
+            	android:layout_height="42dip"
+                android:src="@drawable/ic_action_mark"
+                android:background="@drawable/btn_default"/>
             <ImageView 
                 android:id="@+id/btn_search"
-                android:layout_width="46dip"
-            	android:layout_height="46dip"
-                android:src="@drawable/ic_action_search"/>
+                android:layout_width="42dip"
+            	android:layout_height="42dip"
+                android:src="@drawable/ic_action_search"
+                android:background="@drawable/btn_default"/>
             <ImageView 
                 android:id="@+id/btn_new_folder"
-                android:layout_width="46dip"
-            	android:layout_height="46dip"
-                android:src="@drawable/ic_action_create_folder"/>
+                android:layout_width="42dip"
+            	android:layout_height="42dip"
+                android:src="@drawable/ic_action_create_folder"
+                android:background="@drawable/btn_default"/>
         </LinearLayout>
         </RelativeLayout>
         <ListView
