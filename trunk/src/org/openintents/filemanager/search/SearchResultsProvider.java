@@ -32,9 +32,8 @@ public class SearchResultsProvider extends ContentProvider {
 			COLUMN_ID, COLUMN_NAME, COLUMN_PATH);
 
 	public static final String SEARCH_MIMETYPE = "vnd.android.cursor.item/vnd.openintents.search_result";
-	public static final String PROVIDER_NAME = "org.openintents.filemanager.search";
-	public static final Uri CONTENT_URI = Uri.parse("content://"
-			+ PROVIDER_NAME);
+	public static final String PROVIDER_NAME = "com.dm.oifilemgr.search";
+	public static final Uri CONTENT_URI = Uri.parse("content://"+ PROVIDER_NAME);
 
 	private DatabaseHelper dbHelper;
 	private SQLiteDatabase db;
