@@ -142,6 +142,7 @@
     
     <!-- new menu strings -->
     <string name="menu_bookmarks">Bookmarks</string>
+    <string name="menu_add_bookmarks">Keep</string>
     <string name="menu_search">Search</string>
     <string name="menu_create_folder">Create folder</string>
     <string name="menu_paste">Paste</string>

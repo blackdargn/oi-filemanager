@@ -43,6 +43,8 @@ public class MultiselectListFragment extends FileListFragment {
 		
 		super.onViewCreated(view, savedInstanceState);
 		
+		hideToolbar();
+		
 		mAdapter.setItemLayout(R.layout.item_filelist_multiselect);
 		
 		// Init members

@@ -210,12 +210,7 @@ public class SimpleFileListFragment extends FileListFragment {
 		switch (item.getItemId()) {
 		
 		case R.id.menu_create_folder:
-			CreateDirectoryDialog dialog = new CreateDirectoryDialog();
-			dialog.setTargetFragment(this, 0);
-			Bundle args = new Bundle();
-			args.putString(FileManagerIntents.EXTRA_DIR_PATH, getPath());
-			dialog.setArguments(args);
-			dialog.show(getActivity().getSupportFragmentManager(), CreateDirectoryDialog.class.getName());
+		    onNewFloder();
 			return true;
 			
 		case R.id.menu_media_scan_include:
@@ -243,15 +238,21 @@ public class SimpleFileListFragment extends FileListFragment {
 			return true;
 			
 		case R.id.menu_multiselect:
-	        Intent intent = new Intent(FileManagerIntents.ACTION_MULTI_SELECT);
-	        intent.putExtra(FileManagerIntents.EXTRA_DIR_PATH, getPath());
-	        startActivityForResult(intent, REQUEST_CODE_MULTISELECT);
+		    onMutilSelect();
 			return true;
-			
+		case R.id.menu_add_bookmarks:
+		    MenuUtils.addBookMarker(getActivity(), new FileHolder(new File(getPath()), getActivity()));
+    		return true;
 		default:
 			return false;
 		}
 	}
+
+	public void onMutilSelect() {
+	    Intent intent = new Intent(FileManagerIntents.ACTION_MULTI_SELECT);
+        intent.putExtra(FileManagerIntents.EXTRA_DIR_PATH, getPath());
+        startActivityForResult(intent, REQUEST_CODE_MULTISELECT);
+    }
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {

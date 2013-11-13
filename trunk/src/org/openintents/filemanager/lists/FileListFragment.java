@@ -4,12 +4,17 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.openintents.filemanager.FileHolderListAdapter;
+import org.openintents.filemanager.dialogs.CreateDirectoryDialog;
 import org.openintents.filemanager.files.DirectoryContents;
 import org.openintents.filemanager.files.DirectoryScanner;
 import org.openintents.filemanager.files.FileHolder;
+import org.openintents.filemanager.util.EditTextWatcher;
+import org.openintents.filemanager.util.MenuUtils;
+import org.openintents.filemanager.util.EditTextWatcher.OnTextChanged;
 import org.openintents.filemanager.util.MimeTypes;
 import org.openintents.intents.FileManagerIntents;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -20,9 +25,11 @@ import android.support.v4.app.ListFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.EditText;
 import android.widget.ViewFlipper;
 
 import com.dm.oifilemgr.R;
@@ -38,7 +45,7 @@ import com.dm.oifilemgr.R;
  * 
  * @author George Venios
  */
-public abstract class FileListFragment extends ListFragment {
+public abstract class FileListFragment extends ListFragment implements OnClickListener {
 	private static final String INSTANCE_STATE_PATH = "path";
 	private static final String INSTANCE_STATE_FILES = "files";
 	File mPreviousDirectory = null;
@@ -76,7 +83,13 @@ public abstract class FileListFragment extends ListFragment {
 
 	private ViewFlipper mFlipper;
 	private File mCurrentDirectory;
-
+	
+	private EditText et_file_filter;
+	private EditTextWatcher watcher;
+	private View toolbar;
+	private View btn_add_book, btn_select, btn_search, btn_new_folder;
+	
+	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -117,7 +130,31 @@ public abstract class FileListFragment extends ListFragment {
 
 		// Init flipper
 		mFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
-
+		et_file_filter = (EditText) view.findViewById(R.id.et_file_filter);
+		btn_add_book = view.findViewById(R.id.btn_add_book);
+		btn_select = view.findViewById(R.id.btn_select);
+		btn_search = view.findViewById(R.id.btn_search);
+		btn_new_folder = view.findViewById(R.id.btn_new_folder);
+		toolbar = view.findViewById(R.id.toolbar);
+		
+		btn_add_book.setOnClickListener(this);
+		btn_select.setOnClickListener(this);
+		btn_search.setOnClickListener(this);
+		btn_new_folder.setOnClickListener(this);
+		
+		watcher = new EditTextWatcher();
+	    watcher.setOnTextChanaged(new OnTextChanged() {
+	            @Override
+	            public void onExecute(CharSequence s, int start, int before,
+	                    int count) {
+	                if (s == null || s.length() == 0) {
+	                    filterPath(null);
+	                    return;
+	                }
+	                filterPath(s.toString());
+	            }
+	    });	    
+		
 		// Get arguments
 		if (savedInstanceState == null) {
 			mPath = getArguments().getString(FileManagerIntents.EXTRA_DIR_PATH);
@@ -143,6 +180,53 @@ public abstract class FileListFragment extends ListFragment {
 		super.onDestroy();
 	}
 
+	@Override
+	public void onClick(View v) {
+	    switch(v.getId()) {
+    	    case R.id.btn_add_book:{
+    	        MenuUtils.addBookMarker(getActivity(), new FileHolder(new File(getPath()), getActivity()));
+    	        break;
+    	    }
+    	    case R.id.btn_select:{
+    	        onMutilSelect();
+                break;
+            }
+    	    case R.id.btn_search:{
+    	        onSearchRequested();
+                break;
+            }
+    	    case R.id.btn_new_folder:{
+    	        onNewFloder();
+                break;
+            }
+	    }
+	}
+	
+	protected void hideToolbar() {
+	    toolbar.setVisibility(View.GONE);
+	}
+	
+	public void onNewFloder() {
+	    CreateDirectoryDialog dialog = new CreateDirectoryDialog();
+        dialog.setTargetFragment(this, 0);
+        Bundle args = new Bundle();
+        args.putString(FileManagerIntents.EXTRA_DIR_PATH, getPath());
+        dialog.setArguments(args);
+        dialog.show(getActivity().getSupportFragmentManager(), CreateDirectoryDialog.class.getName());
+	}
+	
+	public boolean onSearchRequested() {
+        Bundle appData = new Bundle();
+        appData.putString(FileManagerIntents.EXTRA_SEARCH_INIT_PATH, getPath());
+        getActivity().startSearch(null, false, appData, false);
+        
+        return true;
+    }
+	
+	public void onMutilSelect() {
+	    
+	}
+	
 	/**
 	 * Reloads {@link #mPath}'s contents.
 	 */
@@ -152,7 +236,7 @@ public abstract class FileListFragment extends ListFragment {
 		// Race condition seen if a long list is requested, and a short list is
 		// requested before the long one loads.
 		mScanner.cancel();
-		mScanner = null;
+//		mScanner = null;
 
 		// Indicate loading and start scanning.
 		setLoading(true);
@@ -196,12 +280,21 @@ public abstract class FileListFragment extends ListFragment {
 		boolean directoriesOnly = getArguments().getBoolean(
 				FileManagerIntents.EXTRA_DIRECTORIES_ONLY);
 
-		mScanner = new DirectoryScanner(new File(mPath), getActivity(),
-				new FileListMessageHandler(),
-				MimeTypes.newInstance(getActivity()),
-				filetypeFilter == null ? "" : filetypeFilter,
-				mimetypeFilter == null ? "" : mimetypeFilter, writeableOnly,
-				directoriesOnly);
+		if(mScanner == null) {
+    		mScanner = new DirectoryScanner(new File(mPath), getActivity(),
+    				new FileListMessageHandler(),
+    				MimeTypes.newInstance(getActivity()),
+    				filetypeFilter == null ? "" : filetypeFilter,
+    				mimetypeFilter == null ? "" : mimetypeFilter, writeableOnly,
+    				directoriesOnly);
+		}else {
+		    mScanner.setup(new File(mPath), getActivity(),
+                    new FileListMessageHandler(),
+                    MimeTypes.newInstance(getActivity()),
+                    filetypeFilter == null ? "" : filetypeFilter,
+                    mimetypeFilter == null ? "" : mimetypeFilter, writeableOnly,
+                    directoriesOnly);
+		}
 		return mScanner;
 	}
 
@@ -212,13 +305,18 @@ public abstract class FileListFragment extends ListFragment {
 			switch (msg.what) {
 			case DirectoryScanner.MESSAGE_SHOW_DIRECTORY_CONTENTS:
 				DirectoryContents c = (DirectoryContents) msg.obj;
+				
+				et_file_filter.removeTextChangedListener(watcher);
+				
 				mFiles.clear();
 				mFiles.addAll(c.listSdCard);
 				mFiles.addAll(c.listDir);
 				mFiles.addAll(c.listFile);
 
-				mAdapter.notifyDataSetChanged();
-
+				mAdapter.setList(mFiles);
+				
+				et_file_filter.setText("");
+				et_file_filter.addTextChangedListener(watcher);
 				
 				if (mPreviousDirectory != null){
 					selectInList(mPreviousDirectory);

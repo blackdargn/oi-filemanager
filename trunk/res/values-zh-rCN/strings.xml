@@ -146,6 +146,7 @@
     
     <!-- new menu strings -->
     <string name="menu_bookmarks">书签</string>
+    <string name="menu_add_bookmarks">收藏</string>
     <string name="menu_search">搜索</string>
     <string name="menu_create_folder">新文件夹</string>
     <string name="menu_paste">粘贴</string>

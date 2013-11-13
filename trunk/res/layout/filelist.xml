@@ -5,7 +5,6 @@
     android:inAnimation="@anim/fade_in"
     android:outAnimation="@anim/fade_out"
     android:isScrollContainer="true" >
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,29 +21,80 @@
             android:layout_height="wrap_content"
             android:text="@string/scanning" />
     </LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center" 
-        android:orientation="vertical">
-
+        android:gravity="center" >
+        <RelativeLayout 
+            android:id="@+id/tool_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal">
+        <EditText
+            android:id="@+id/et_file_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/toolbar"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/bg_search"
+            android:drawableLeft="@drawable/icon_search"
+            android:drawablePadding="4dip"
+            android:hint="输入过滤文件名称"
+            android:singleLine="true"
+            android:visibility="visible"/>
+        
+        <LinearLayout  
+            android:id="@+id/toolbar"           
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <ImageView 
+                android:id="@+id/btn_add_book"
+                android:layout_width="30dip"
+            	android:layout_height="30dip"
+                android:src="@drawable/ic_action_add_bookmark"/>
+            <ImageView 
+                android:id="@+id/btn_select"
+                android:layout_width="30dip"
+            	android:layout_height="30dip"
+                android:src="@drawable/ic_action_mark"/>
+            <ImageView 
+                android:id="@+id/btn_search"
+                android:layout_width="30dip"
+            	android:layout_height="30dip"
+                android:src="@drawable/ic_action_search"/>
+            <ImageView 
+                android:id="@+id/btn_new_folder"
+                android:layout_width="30dip"
+            	android:layout_height="30dip"
+                android:src="@drawable/ic_action_create_folder"/>
+        </LinearLayout>
+        </RelativeLayout>
         <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/tool_lay"
             android:fastScrollEnabled="true"
             android:layout_marginLeft="@dimen/list_margin"
             android:layout_marginRight="@dimen/list_margin"
             android:background="?attr/listBackground" >
         </ListView>
-
         <TextView
             android:id="@android:id/empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="14dip"
+            android:layout_below="@+id/tool_lay"
+            android:layout_centerInParent="true"
             android:text="@string/this_folder_is_empty"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </LinearLayout>
+            android:textAppearance="?android:attr/textAppearanceMedium" 
+            android:visibility="gone"/>
+    </RelativeLayout>
 
 </ViewFlipper>
