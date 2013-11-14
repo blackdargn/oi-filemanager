@@ -21,7 +21,6 @@ public class FileHolderListAdapter extends BaseAdapter {
 	private Context mContext;
 	private int mItemLayoutId = R.layout.item_filelist;
 	
-	// Thumbnail specific
     private ThumbnailLoader mThumbnailLoader;
     private boolean scrolling = false;
 	
@@ -37,7 +36,7 @@ public class FileHolderListAdapter extends BaseAdapter {
 	    mThumbnailLoader.cancel();
 	}
 	
-	public void setList(List<FileHolder> files) {
+	public synchronized void setList(List<FileHolder> files) {
 	    mItems = files;
 	    notifyDataSetChanged();
 	}
@@ -57,7 +56,7 @@ public class FileHolderListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public Object getItem(int position){
 		return mItems.get(position);
 	}
 

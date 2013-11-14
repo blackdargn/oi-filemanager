@@ -59,11 +59,9 @@ public class MultiselectListFragment extends FileListFragment {
 				}
 				
 				ArrayList<FileHolder> fItems = new ArrayList<FileHolder>();
-				long[] ids = getListView().getCheckItemIds();
-				for(long i : ids ){
-					fItems.add((FileHolder) mAdapter.getItem((int) i));
-				}
-				
+				for(long i : getListView().getCheckItemIds()){
+    				fItems.add((FileHolder) mAdapter.getItem((int) i));
+    			}
 				MenuUtils.handleMultipleSelectionAction(MultiselectListFragment.this, item, fItems, getActivity());
 			}
 		});
