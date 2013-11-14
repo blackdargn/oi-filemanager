@@ -17,7 +17,7 @@ import com.dm.oifilemgr.R;
  * @author George Venios
  * 
  */
-public class SearchCore {
+public class SearchCore{
 	private String mQuery;
 	private Uri mContentURI;
 	private Context mContext;
@@ -29,6 +29,7 @@ public class SearchCore {
 	
 	private long mMaxNanos = -1;
 	private long mStart;
+	public boolean isCancel;
 	
 	public SearchCore(Context context) {
 		mContext = context;
@@ -87,7 +88,11 @@ public class SearchCore {
 		mMaxNanos = maxNanos;
 		mStart = System.nanoTime();
 	}
-
+	
+	public void cancel() {
+	    isCancel = true;
+	}
+	
 	private void insertResult(File f) {
 		mResultCount++;
 
@@ -116,6 +121,7 @@ public class SearchCore {
 	 */
 	public int dropPreviousResults() {
 		mResultCount = 0;
+		isCancel = false;
 		return mContext.getContentResolver().delete(mContentURI, null, null);
 	}
 
@@ -126,27 +132,34 @@ public class SearchCore {
 	 *            The starting dir for the search. Callers outside of this class are highly encouraged to use the same as {@link #root}.
 	 */
 	public void search(File dir) {
-		// Results in root pass
-		for (File f : dir.listFiles(filter)) {
-			insertResult(f);
-			
-			// Break search on result count and search time conditions.
-			if ((mMaxResults > 0 && mResultCount >= mMaxResults) || (mMaxNanos > 0 && System.nanoTime()-mStart > mMaxNanos)) {
-				return;
-			}
-		}
+	    if(isCancel) return;
+	    
+	    try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+	    
+        // Results in root pass
+        for (File f : dir.listFiles(filter)) {
+            insertResult(f);            
+            // Break search on result count and search time conditions.
+            if ((mMaxResults > 0 && mResultCount >= mMaxResults) || (mMaxNanos > 0 && System.nanoTime()-mStart > mMaxNanos)) {
+                return;
+            }
+        }
 
-		// Recursion pass
-		for (File f : dir.listFiles()) {
-			// Prevent us from re-searching the root directory, or trying to search invalid Files.
-			if (f.isDirectory() && f.canRead() && !isChildOf(f, root))
-				search(f);
-		}
+        // Recursion pass
+        for (File f : dir.listFiles()) {
+            // Prevent us from re-searching the root directory, or trying to search invalid Files.
+            if (f.isDirectory() && f.canRead() && !isChildOf(f, root))
+                search(f);
+        }
 
-		// If we're on the parent of the recursion, and we're done searching, start searching the rest of the FS.
-		if (dir.equals(root) && !root.equals(Environment.getExternalStorageDirectory())) {
-			search(Environment.getExternalStorageDirectory());
-		}
+        // If we're on the parent of the recursion, and we're done searching, start searching the rest of the FS.
+        if (dir.equals(root) && !root.equals(Environment.getExternalStorageDirectory())) {
+            search(Environment.getExternalStorageDirectory());
+        }
 	}
 
 	/**

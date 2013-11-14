@@ -9,12 +9,11 @@ import org.openintents.filemanager.files.DirectoryContents;
 import org.openintents.filemanager.files.DirectoryScanner;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.util.EditTextWatcher;
-import org.openintents.filemanager.util.MenuUtils;
 import org.openintents.filemanager.util.EditTextWatcher.OnTextChanged;
+import org.openintents.filemanager.util.MenuUtils;
 import org.openintents.filemanager.util.MimeTypes;
 import org.openintents.intents.FileManagerIntents;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -45,7 +44,7 @@ import com.dm.oifilemgr.R;
  * 
  * @author George Venios
  */
-public abstract class FileListFragment extends ListFragment implements OnClickListener {
+public abstract class FileListFragment extends RefreshListFragment implements OnClickListener {
 	private static final String INSTANCE_STATE_PATH = "path";
 	private static final String INSTANCE_STATE_FILES = "files";
 	File mPreviousDirectory = null;
@@ -177,6 +176,7 @@ public abstract class FileListFragment extends ListFragment implements OnClickLi
 	@Override
 	public void onDestroy() {
 		mScanner.cancel();
+		if(mAdapter != null) mAdapter.destory();
 		super.onDestroy();
 	}
 

@@ -7,7 +7,6 @@ import org.openintents.filemanager.FileManagerApplication;
 import org.openintents.filemanager.PreferenceActivity;
 import org.openintents.filemanager.compatibility.ActionbarRefreshHelper;
 import org.openintents.filemanager.compatibility.FileMultiChoiceModeHelper;
-import org.openintents.filemanager.dialogs.CreateDirectoryDialog;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.util.CopyHelper;
 import org.openintents.filemanager.util.FileUtils;
@@ -137,8 +136,13 @@ public class SimpleFileListFragment extends FileListFragment {
 	public void openInformingPathBar(FileHolder item) {
 		if(mPathBar == null)
 			open(item);
-		else
-			mPathBar.cd(item.getFile());
+		else {
+		    if(item.getFile().isDirectory()) {
+		        mPathBar.cd(item.getFile());
+		    }else {
+		        openFile(item);
+		    }
+		}
 	}
 
 	/**

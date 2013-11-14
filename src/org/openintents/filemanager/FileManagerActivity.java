@@ -204,6 +204,12 @@ public class FileManagerActivity extends DistributionLibraryFragmentActivity {
 		
 	}
 	
+	@Override
+	protected void onDestroy() {
+	    ThumbnailLoader.shutdown();
+	    super.onDestroy();
+	}
+	
 	/**
 	 * We override this, so that we get informed about the opening of the search dialog and start scanning silently.
 	 */

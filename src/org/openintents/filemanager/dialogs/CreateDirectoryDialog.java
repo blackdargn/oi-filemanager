@@ -3,7 +3,7 @@ package org.openintents.filemanager.dialogs;
 import java.io.File;
 
 import org.openintents.filemanager.dialogs.OverwriteFileDialog.Overwritable;
-import org.openintents.filemanager.lists.FileListFragment;
+import org.openintents.filemanager.lists.RefreshListFragment;
 import org.openintents.filemanager.util.UIUtils;
 import org.openintents.intents.FileManagerIntents;
 
@@ -82,7 +82,7 @@ public class CreateDirectoryDialog extends DialogFragment implements Overwritabl
 				else
 					Toast.makeText(c, R.string.create_dir_failure, Toast.LENGTH_SHORT).show();
 
-				((FileListFragment) getTargetFragment()).refresh();
+				((RefreshListFragment) getTargetFragment()).refresh();
 				dismiss();
 			}
 		}

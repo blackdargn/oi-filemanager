@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.openintents.filemanager.dialogs.OverwriteFileDialog.Overwritable;
 import org.openintents.filemanager.files.FileHolder;
-import org.openintents.filemanager.lists.FileListFragment;
+import org.openintents.filemanager.lists.RefreshListFragment;
 import org.openintents.filemanager.util.CompressManager;
 import org.openintents.filemanager.util.MediaScannerUtils;
 import org.openintents.intents.FileManagerIntents;
@@ -38,7 +38,7 @@ public class SingleCompressDialog extends DialogFragment implements Overwritable
 			
 			@Override
 			public void compressFinished() {
-				((FileListFragment) SingleCompressDialog.this.getTargetFragment()).refresh();
+				((RefreshListFragment) SingleCompressDialog.this.getTargetFragment()).refresh();
 
 				MediaScannerUtils.informFileAdded(getTargetFragment().getActivity().getApplicationContext(), tbcreated);
 			}

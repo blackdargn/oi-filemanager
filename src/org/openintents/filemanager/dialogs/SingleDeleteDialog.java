@@ -3,7 +3,7 @@ package org.openintents.filemanager.dialogs;
 import java.io.File;
 
 import org.openintents.filemanager.files.FileHolder;
-import org.openintents.filemanager.lists.FileListFragment;
+import org.openintents.filemanager.lists.RefreshListFragment;
 import org.openintents.filemanager.util.MediaScannerUtils;
 import org.openintents.filemanager.util.UIUtils;
 import org.openintents.intents.FileManagerIntents;
@@ -89,7 +89,7 @@ public class SingleDeleteDialog extends DialogFragment {
 		@Override
 		protected void onPostExecute(Void result) {
 			Toast.makeText(dialog.getContext(), mResult == 0 ? R.string.delete_failure : R.string.delete_success, Toast.LENGTH_LONG).show();
-			((FileListFragment) getTargetFragment()).refresh();
+			((RefreshListFragment) getTargetFragment()).refresh();
 			dialog.dismiss();
 			
 			MediaScannerUtils.informFileDeleted(getTargetFragment().getActivity().getApplicationContext(), mFileHolder.getFile());

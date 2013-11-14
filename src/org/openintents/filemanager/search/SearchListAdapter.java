@@ -3,11 +3,14 @@ package org.openintents.filemanager.search;
 import java.io.File;
 import java.util.HashMap;
 
+import org.openintents.filemanager.ThumbnailLoader;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.view.ViewHolder;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorWrapper;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +27,20 @@ import com.dm.oifilemgr.R;
  */
 public class SearchListAdapter extends CursorAdapter {
 	private HashMap<String, FileHolder> itemCache = new HashMap<String, FileHolder>();
-
+	private ThumbnailLoader mThumbnailLoader;
+	private Drawable folderIcon, genericFileIcon;
+	private Context mContext;
+	
 	public SearchListAdapter(Context context, Cursor c) {
 		super(context, c, true);
+		mThumbnailLoader = new ThumbnailLoader(context);
+		folderIcon = context.getResources().getDrawable(R.drawable.ic_launcher_folder);
+        genericFileIcon = context.getResources().getDrawable(R.drawable.ic_launcher_file);
+        mContext = context;
+	}
+	
+	public void destory() {
+	    mThumbnailLoader.cancel();
 	}
 
 	@Override
@@ -34,7 +48,8 @@ public class SearchListAdapter extends CursorAdapter {
 		String path = cursor.getString(cursor.getColumnIndex(SearchResultsProvider.COLUMN_PATH));
 		FileHolder fHolder;
 		if((fHolder = itemCache.get(path)) == null){
-			fHolder = new FileHolder(new File(path), context);
+		    File file = new File(path);
+			fHolder = new FileHolder(file, file.isDirectory() ? folderIcon : genericFileIcon, context);
 			itemCache.put(path, fHolder);
 		}
 
@@ -42,6 +57,12 @@ public class SearchListAdapter extends CursorAdapter {
 		h.primaryInfo.setText(fHolder.getName());
 		h.secondaryInfo.setText(path);
 		h.icon.setImageDrawable(fHolder.getIcon());
+		
+		 if(shouldLoadIcon(fHolder)){
+	            if(mThumbnailLoader != null) {
+	                mThumbnailLoader.loadImage(fHolder, h.icon);
+	            }
+	    }
 	}
 
 	@Override
@@ -62,4 +83,15 @@ public class SearchListAdapter extends CursorAdapter {
 		
 		return v;
 	}
+	
+	public FileHolder getItem(int position) {
+	    Cursor c = new CursorWrapper(getCursor());
+        c.moveToPosition(position);
+        String path = c.getString(c.getColumnIndex(SearchResultsProvider.COLUMN_PATH));
+        return new FileHolder(new File(path), mContext);
+	}
+
+	private boolean shouldLoadIcon(FileHolder item){
+        return item.getFile().isFile() && !item.getMimeType().equals("video/mpeg");
+    }
 }

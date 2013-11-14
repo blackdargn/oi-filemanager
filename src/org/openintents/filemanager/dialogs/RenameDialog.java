@@ -3,7 +3,7 @@ package org.openintents.filemanager.dialogs;
 import java.io.File;
 
 import org.openintents.filemanager.files.FileHolder;
-import org.openintents.filemanager.lists.FileListFragment;
+import org.openintents.filemanager.lists.RefreshListFragment;
 import org.openintents.filemanager.util.MediaScannerUtils;
 import org.openintents.filemanager.util.UIUtils;
 import org.openintents.intents.FileManagerIntents;
@@ -76,7 +76,7 @@ public class RenameDialog extends DialogFragment {
 			File dest = new File(mFileHolder.getFile().getParent() + File.separator + to);
 			if(!dest.exists()){
 				res = mFileHolder.getFile().renameTo(dest);
-				((FileListFragment) getTargetFragment()).refresh();
+				((RefreshListFragment) getTargetFragment()).refresh();
 
 				// Inform media scanner
 				MediaScannerUtils.informFileDeleted(getActivity().getApplicationContext(), from);

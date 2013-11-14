@@ -18,7 +18,7 @@ import org.openintents.filemanager.dialogs.SingleCompressDialog;
 import org.openintents.filemanager.dialogs.SingleDeleteDialog;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.lists.FileListFragment;
-import org.openintents.filemanager.lists.SimpleFileListFragment;
+import org.openintents.filemanager.lists.RefreshListFragment;
 import org.openintents.intents.FileManagerIntents;
 
 import android.app.AlertDialog;
@@ -173,7 +173,7 @@ public abstract class MenuUtils {
 	 * @param mItem The selected menu option/action.
 	 * @param fItem The data to act upon.
 	 */
-	public static boolean handleSingleSelectionAction(final SimpleFileListFragment navigator, MenuItem mItem, FileHolder fItem, Context context){
+	public static boolean handleSingleSelectionAction(final RefreshListFragment navigator, MenuItem mItem, FileHolder fItem, Context context){
 		DialogFragment dialog;
 		Bundle args;
 		
