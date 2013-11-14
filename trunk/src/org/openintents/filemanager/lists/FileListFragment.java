@@ -144,8 +144,9 @@ public abstract class FileListFragment extends RefreshListFragment implements On
 		watcher = new EditTextWatcher();
 	    watcher.setOnTextChanaged(new OnTextChanged() {
 	            @Override
-	            public void onExecute(CharSequence s, int start, int before,
-	                    int count) {
+	            public void onExecute(CharSequence s, int start, int before,int count) {
+	                // 取消选择
+	                getListView().clearChoices();
 	                if (s == null || s.length() == 0) {
 	                    filterPath(null);
 	                    return;
