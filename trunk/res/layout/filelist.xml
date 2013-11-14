@@ -1,35 +1,11 @@
-<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/flipper"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:inAnimation="@anim/fade_in"
-    android:outAnimation="@anim/fade_out"
-    android:isScrollContainer="true" >
-	<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/scanning" />
-    </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center" >
-        <RelativeLayout 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:orientation="vertical">
+	<RelativeLayout 
             android:id="@+id/tool_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:orientation="horizontal">
         <EditText
             android:id="@+id/et_file_filter"
@@ -45,8 +21,7 @@
             android:drawablePadding="4dip"
             android:hint="输入关键字"
             android:singleLine="true"
-            android:visibility="visible"/>
-        
+            android:visibility="visible"/>      
         <LinearLayout  
             android:id="@+id/toolbar"           
             android:layout_width="wrap_content"
@@ -81,11 +56,36 @@
                 android:background="@drawable/btn_default"/>
         </LinearLayout>
         </RelativeLayout>
+	<ViewFlipper 
+	    android:id="@+id/flipper"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:inAnimation="@anim/fade_in"
+	    android:outAnimation="@anim/fade_out"
+	    android:isScrollContainer="true" >
+	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/scanning" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center" 
+        android:orientation="horizontal">       
         <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tool_lay"
             android:fastScrollEnabled="true"
             android:layout_marginLeft="@dimen/list_margin"
             android:layout_marginRight="@dimen/list_margin"
@@ -96,11 +96,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dip"
-            android:layout_below="@+id/tool_lay"
-            android:layout_centerInParent="true"
             android:text="@string/this_folder_is_empty"
             android:textAppearance="?android:attr/textAppearanceMedium" 
             android:visibility="gone"/>
-    </RelativeLayout>
-
+    </LinearLayout>
 </ViewFlipper>
+</LinearLayout>

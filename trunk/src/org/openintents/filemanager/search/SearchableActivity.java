@@ -1,7 +1,7 @@
 package org.openintents.filemanager.search;
 
-import org.openintents.filemanager.FileManagerActivity;
 import org.openintents.filemanager.compatibility.HomeIconHelper;
+import org.openintents.filemanager.lists.SearchFileListFragment;
 import org.openintents.filemanager.util.UIUtils;
 import org.openintents.intents.FileManagerIntents;
 
@@ -10,19 +10,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
-import android.database.CursorWrapper;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
-import android.widget.ListView;
 
-import com.dm.DMListActivity;
 import com.dm.oifilemgr.R;
 
 /**
@@ -32,9 +27,12 @@ import com.dm.oifilemgr.R;
  * @author George Venios
  * 
  */
-public class SearchableActivity extends DMListActivity {
+public class SearchableActivity extends FragmentActivity {
+    
+    private static final String FRAGMENT_TAG = "SearchListFragment";  
+    private SearchFileListFragment mFragment;   
 	private LocalBroadcastManager lbm;
-	private Cursor searchResults;
+	private String mPath, mQuery;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +43,15 @@ public class SearchableActivity extends DMListActivity {
 		super.onCreate(savedInstanceState);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			HomeIconHelper.activity_actionbar_setDisplayHomeAsUpEnabled(this);
-		}
-
+		}		
 		lbm = LocalBroadcastManager.getInstance(getApplicationContext());
-		
+		setContentView(R.layout.activity_template);
+		// Add fragment only if it hasn't already been added.
+        mFragment = (SearchFileListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        if(mFragment == null){
+            mFragment = new SearchFileListFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.containerLay, mFragment, FRAGMENT_TAG).commit();
+        }
 		// Handle the search request.
 		handleIntent();
 	}
@@ -73,48 +76,37 @@ public class SearchableActivity extends DMListActivity {
 		Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			// Get the query.
-			String query = intent.getStringExtra(SearchManager.QUERY);
-			setTitle(query);
-
+		    mQuery = intent.getStringExtra(SearchManager.QUERY);
+			setTitle(mQuery);
 			// Get the current path, which allows us to refine the search.
-			String path = null;
 			if (intent.getBundleExtra(SearchManager.APP_DATA) != null)
-				path = intent.getBundleExtra(SearchManager.APP_DATA).getString(
-						FileManagerIntents.EXTRA_SEARCH_INIT_PATH);
-
-			// Add query to recents.
-			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(
-					this, RecentsSuggestionsProvider.AUTHORITY,
-					RecentsSuggestionsProvider.MODE);
-			suggestions.saveRecentQuery(query, null);
-
+			    mPath = intent.getBundleExtra(SearchManager.APP_DATA).getString(
+						FileManagerIntents.EXTRA_SEARCH_INIT_PATH);			
+	        // Add query to recents.
+	        SearchRecentSuggestions suggestions = new SearchRecentSuggestions(
+	                this, RecentsSuggestionsProvider.AUTHORITY,
+	                RecentsSuggestionsProvider.MODE);
+	        suggestions.saveRecentQuery(mQuery, null);
 			// Register broadcast receivers
-			lbm.registerReceiver(new BroadcastReceiver() {
-				@Override
-				public void onReceive(Context context, Intent intent) {
-					setProgressBarIndeterminateVisibility(false);
-				}
-			}, new IntentFilter(FileManagerIntents.ACTION_SEARCH_FINISHED));
-			
-			lbm.registerReceiver(new BroadcastReceiver() {
-				@Override
-				public void onReceive(Context context, Intent intent) {
-					setProgressBarIndeterminateVisibility(true);
-				}
-			}, new IntentFilter(FileManagerIntents.ACTION_SEARCH_STARTED));
-			
-			// Set the list adapter.
-			searchResults = getSearchResults();
-			setListAdapter(new SearchListAdapter(this, searchResults));
-			
-			// Start the search service.
-			Intent in = new Intent(this, SearchService.class);
-			in.putExtra(FileManagerIntents.EXTRA_SEARCH_INIT_PATH, path);
-			in.putExtra(FileManagerIntents.EXTRA_SEARCH_QUERY, query);
-			startService(in);
+	        lbm.registerReceiver(new BroadcastReceiver() {
+	            @Override
+	            public void onReceive(Context context, Intent intent) {
+	                setProgressBarIndeterminateVisibility(false);
+	            }
+	        }, new IntentFilter(FileManagerIntents.ACTION_SEARCH_FINISHED));	        
+	        lbm.registerReceiver(new BroadcastReceiver() {
+	            @Override
+	            public void onReceive(Context context, Intent intent) {
+	                setProgressBarIndeterminateVisibility(true);
+	            }
+	        }, new IntentFilter(FileManagerIntents.ACTION_SEARCH_STARTED));
+	        
+	        mFragment.handIntent(mQuery, this);	        
+	        refresh();
+	        
 		} // We're here because of a clicked suggestion
 		else if(Intent.ACTION_VIEW.equals(intent.getAction())){
-			browse(intent.getData());
+		    mFragment.browse(intent.getData().getPath());
 		}
 		else
 			// Intent contents error.
@@ -122,10 +114,14 @@ public class SearchableActivity extends DMListActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected void onDestroy() {		
+	    SearchService.stopService(this);
 		super.onDestroy();
-		
-		stopService(new Intent(this, SearchService.class));
+	}
+	
+	public void refresh() {
+	    // Start the search service.
+	    SearchService.startService(this, mPath, mQuery);
 	}
 	
 	/**
@@ -136,27 +132,5 @@ public class SearchableActivity extends DMListActivity {
 				RecentsSuggestionsProvider.AUTHORITY,
 				RecentsSuggestionsProvider.MODE);
 		suggestions.clearHistory();
-	}
-
-	private Cursor getSearchResults() {
-		return getContentResolver().query(SearchResultsProvider.CONTENT_URI, null, null, null, SearchResultsProvider.COLUMN_ID + " ASC");
-	}
-	
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		Cursor c = new CursorWrapper(searchResults);
-		c.moveToPosition(position);
-		String path = c.getString(c.getColumnIndex(SearchResultsProvider.COLUMN_PATH));
-		
-		browse(Uri.parse(path));
-	}
-
-	private void browse(Uri path) {
-		Intent intent = new Intent(this, FileManagerActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.setData(path);
-		
-		startActivity(intent);
-		finish();
 	}
 }

@@ -60,7 +60,7 @@ public class ThumbnailLoader {
     
     private Runnable purger;
     private Handler purgeHandler;
-    private ExecutorService mExecutor;
+    private static ExecutorService mExecutor;
     
     // Soft bitmap cache for thumbnails removed from the hard cache.
     // This gets cleared by the Garbage Collector everytime we get low on memory.
@@ -86,8 +86,9 @@ public class ThumbnailLoader {
 		};
 		
 		purgeHandler = new Handler();
-		mExecutor = Executors.newFixedThreadPool(POOL_SIZE);
-		
+		if(mExecutor == null) {
+		    mExecutor = Executors.newFixedThreadPool(POOL_SIZE);
+		}
 		mBlacklist = new ArrayList<String>();
 		mSoftBitmapCache = new ConcurrentHashMap<String, SoftReference<Bitmap>>(MAX_CACHE_CAPACITY / 2);
 		mHardBitmapCache = new LinkedHashMap<String, Bitmap>(MAX_CACHE_CAPACITY / 2, 0.75f, true){
@@ -136,28 +137,38 @@ public class ThumbnailLoader {
 					// Submit the file for decoding.
 					Thumbnail thumbnail = new Thumbnail(imageView, holder);
 					WeakReference<ThumbnailRunner> runner = new WeakReference<ThumbnailRunner>(new ThumbnailRunner(thumbnail));
-					mExecutor.submit(runner.get());
+					submit(runner.get());
 				}
 			}
 		}
 	}
+	
+	public static void submit(Runnable run) {
+	    if(run == null) return;
+	    if(mExecutor == null) {
+	        mExecutor = Executors.newFixedThreadPool(POOL_SIZE);
+	    }
+	    if(mExecutor != null) mExecutor.submit(run);
+	}
+	
 	/**
 	 * Cancels any downloads, shuts down the executor pool,
 	 * and then purges the caches.
 	 */
 	public void cancel(){
-		cancel = true;
-		
-		// We could also terminate it immediately,
-		// but that may lead to synchronization issues.
-		if(!mExecutor.isShutdown()){
-			mExecutor.shutdown();
-		}
-		
-		stopPurgeTimer();
-		
+		cancel = true;		
+		stopPurgeTimer();	
 		mContext = null;
 		clearCaches();
+	}
+	
+	public static  void shutdown() {	       
+        // We could also terminate it immediately,
+        // but that may lead to synchronization issues.
+        if(!mExecutor.isShutdown()){
+            mExecutor.shutdown();
+            mExecutor= null;
+        }
 	}
 	
 	/**

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dm.oifilemgr"
     android:installLocation="auto"
-    android:versionCode="2"
-    android:versionName="1.2" >
+    android:versionCode="3"
+    android:versionName="1.3" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -155,6 +155,10 @@
             android:authorities="com.dm.oifilemgr.search.SuggestionProvider" >
         </provider>
         <service android:name="org.openintents.filemanager.search.SearchService" >
+            <intent-filter>
+                <action android:name="android.dm.start_search" />
+                <action android:name="android.dm.stop_search" />
+            </intent-filter>
         </service>
     </application>
 </manifest>

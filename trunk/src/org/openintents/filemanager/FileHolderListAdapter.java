@@ -33,6 +33,10 @@ public class FileHolderListAdapter extends BaseAdapter {
 		mThumbnailLoader = new ThumbnailLoader(c);
 	}
 	
+	public void destory() {
+	    mThumbnailLoader.cancel();
+	}
+	
 	public void setList(List<FileHolder> files) {
 	    mItems = files;
 	    notifyDataSetChanged();

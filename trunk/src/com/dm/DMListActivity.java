@@ -20,7 +20,11 @@ public class DMListActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        if(isNoTitle()) getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+    }
+    
+    public boolean isNoTitle() {
+        return true;
     }
     
     @Override
