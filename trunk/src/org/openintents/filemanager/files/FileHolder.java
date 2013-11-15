@@ -68,6 +68,11 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 		mMimeType = in.readString();
 		mExtension = in.readString();
 	}
+	
+	public void setExtension(String extension) {
+	    mExtension = extension;
+	    mMimeType = MimeTypes.newInstance(mContext).getMimeTypeBy(extension);
+	}
 
 	public File getFile(){
 		return mFile;

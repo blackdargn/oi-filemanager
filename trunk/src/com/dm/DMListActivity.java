@@ -14,7 +14,7 @@ import com.dm.oifilemgr.R;
 
 public class DMListActivity extends ListActivity {
     
-//    private DomobAdView adView1;
+    private DomobAdView adView1;
     private DomobAdView adView2;
      
     @Override
@@ -30,7 +30,7 @@ public class DMListActivity extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        adView1.requestRefreshAd();
+        adView1.requestRefreshAd();
         adView2.requestRefreshAd();
     }
         
@@ -46,10 +46,12 @@ public class DMListActivity extends ListActivity {
         View view = getLayoutInflater().inflate(layoutResID, null);     
         containerLay.addView(view,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     
-//        adView1 = DMUtil.bindView(this, topBarLay, DMUtil.FlexibleInlinePPID1);
+        adView1 = DMUtil.bindView(this, topBarLay, DMUtil.FlexibleInlinePPID1);
         adView2 = DMUtil.bindView(this, btmBarLay, DMUtil.FlexibleInlinePPID2);
         
         setContentView(template);
-        getListView().addFooterView(DMUtil.createAdView(this, DMUtil.FlexibleInlinePPID2));
+        MLinelayout line = new MLinelayout(this);
+        line.addView(DMUtil.createAdView(this, DMUtil.FlexibleInlinePPID2));
+        getListView().addFooterView(line);
     }
 }
