@@ -13,10 +13,17 @@ import cn.domob.android.ads.DomobAdView;
 import cn.domob.android.ads.DomobAdManager.ErrorCode;
 
 public class DMUtil {
-    // attention this
+    // attention this  
     public static final String PUBLISHER_ID = "56OJzVlYuNOOvu5mDp";
     public static final String FlexibleInlinePPID1 = "16TLm7ZaAp0tWNU-Ux1inwXs";
     public static final String FlexibleInlinePPID2 = "16TLm7ZaAp0tWNU-UsjJ5S-i";
+    public static final int BUFFED = 2;
+    public static long count = 0;
+    
+    public static boolean isBuffed() {
+        count++;
+        return count%BUFFED == 0;
+    }
     
     public static DomobAdView bindView(final Activity activity, ViewGroup container, String placeId) {
         DomobAdView mAdviewFlexibleAdView = createAdView(activity, placeId);

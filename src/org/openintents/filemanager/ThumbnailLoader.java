@@ -324,6 +324,7 @@ public class ThumbnailLoader {
 				if(!cancel){
 					if(bitmap != null){
 						// Bitmap was successfully decoded so we place it in the hard cache.
+					    thumb.holder.setExtension(".png");
 						mHardBitmapCache.put(thumb.holder.getName(), bitmap);
 						activity.runOnUiThread(new ThumbnailUpdater(bitmap, thumb));
 					}

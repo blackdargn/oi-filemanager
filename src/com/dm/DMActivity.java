@@ -12,7 +12,7 @@ import com.dm.oifilemgr.R;
 
 public class DMActivity extends Activity {
     
-//    private DomobAdView adView1;
+    private DomobAdView adView1;
     private DomobAdView adView2;
   
     @Override
@@ -24,7 +24,7 @@ public class DMActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-//        adView1.requestRefreshAd();
+        adView1.requestRefreshAd();
         adView2.requestRefreshAd();
     }
     
@@ -39,7 +39,7 @@ public class DMActivity extends Activity {
         View view = getLayoutInflater().inflate(layoutResID, null);     
         containerLay.addView(view,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     
-//        adView1 = DMUtil.bindView(this, topBarLay, DMUtil.FlexibleInlinePPID1);
+        adView1 = DMUtil.bindView(this, topBarLay, DMUtil.FlexibleInlinePPID1);
         adView2 = DMUtil.bindView(this, btmBarLay, DMUtil.FlexibleInlinePPID2);
     }
 }
