@@ -92,6 +92,7 @@ public class FileManagerActivity extends DistributionLibraryFragmentActivity {
 		File data = resolveIntentData();
 		
 		setContentView(R.layout.activity_template);
+		DMUtil.bindView(this, (ViewGroup)findViewById(R.id.topBarLay), DMUtil.FlexibleInlinePPID1);
 		DMUtil.bindView(this, (ViewGroup)findViewById(R.id.btmBarLay), DMUtil.FlexibleInlinePPID2);
 		
 		// Add fragment only if it hasn't already been added.

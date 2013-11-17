@@ -16,8 +16,10 @@ import android.provider.SearchRecentSuggestions;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.Window;
 
+import com.dm.DMUtil;
 import com.dm.oifilemgr.R;
 
 /**
@@ -46,6 +48,8 @@ public class SearchableActivity extends FragmentActivity {
 		}		
 		lbm = LocalBroadcastManager.getInstance(getApplicationContext());
 		setContentView(R.layout.activity_template);
+		DMUtil.bindView(this, (ViewGroup)findViewById(R.id.btmBarLay),DMUtil.FlexibleInlinePPID2);
+		
 		// Add fragment only if it hasn't already been added.
         mFragment = (SearchFileListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if(mFragment == null){
