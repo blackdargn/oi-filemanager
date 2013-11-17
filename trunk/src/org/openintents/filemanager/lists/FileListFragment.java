@@ -31,6 +31,8 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.EditText;
 import android.widget.ViewFlipper;
 
+import com.dm.DMUtil;
+import com.dm.MLinelayout;
 import com.dm.oifilemgr.R;
 
 /**
@@ -126,7 +128,11 @@ public abstract class FileListFragment extends RefreshListFragment implements On
 		});
 		getListView().requestFocus();
 		getListView().requestFocusFromTouch();
-
+		
+		MLinelayout line = new MLinelayout(view.getContext());
+        line.addView(DMUtil.createAdView(getActivity(), DMUtil.FlexibleInlinePPID2));
+        getListView().addFooterView(line);
+        
 		// Init flipper
 		mFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
 		et_file_filter = (EditText) view.findViewById(R.id.et_file_filter);

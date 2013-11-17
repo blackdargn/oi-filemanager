@@ -117,9 +117,13 @@
     <string-array name="preference_sortby_names">
         <item>名稱</item>
         <item>大小</item>
-        <item>修改日期</item>
+        <item>上次修改</item>
+        <item>文件類型</item>
     </string-array>
 
+    <string name="preference_usedarktheme_title">使用黑色樣式(需要重啟應用)</string>
+    <string name="preference_usedarktheme_summary_on">黑色樣式選取</string>
+    <string name="preference_usedarktheme_summary_off">亮色樣式選取</string>
         
     <!-- ***************************
    		 Strings for the \'Save as\' feature
@@ -201,6 +205,9 @@
     <string name="overwrite_question">是否覆蓋文件?</string>
     
     <string name="directory_pick">選擇當前目錄</string>
+    <string name="filename_hint">文件名</string>
+    <string name="choose_filename">文件名不能為空!</string>
+    <string name="pick_button_default">選取文件</string>
     
     <!-- CopyHelper statuses -->
     <string name="copying">拷貝中…</string>
@@ -210,4 +217,11 @@
     <string name="moved">移動成功</string>
     <string name="move_error">移動失敗!</string>
     <string name="nothing_to_paste">無法粘貼. 請先拷貝或剪切文件.</string>
+    
+    <string-array name="sortby_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 </resources>
