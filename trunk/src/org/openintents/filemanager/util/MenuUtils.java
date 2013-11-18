@@ -178,9 +178,10 @@ public abstract class MenuUtils {
 		Bundle args;
 		
 		switch (mItem.getItemId()) {
-		case R.id.menu_open:
-			navigator.openInformingPathBar(fItem);
-			return true;
+		
+//		case R.id.menu_open:
+//			navigator.openInformingPathBar(fItem);
+//			return true;
 			
 		case R.id.menu_create_shortcut:
             createShortcut(fItem, context);
@@ -264,14 +265,14 @@ public abstract class MenuUtils {
 		    addBookMarker(context, fItem);
 			return true;
 
-		case R.id.menu_more:
-			if (!PreferenceActivity.getShowAllWarning(context)){
-				showMoreCommandsDialog(fItem, context);
-				return true;
-			}
-			showWarningDialog(fItem, context);
-
-			return true;
+//		case R.id.menu_more:
+//			if (!PreferenceActivity.getShowAllWarning(context)){
+//				showMoreCommandsDialog(fItem, context);
+//				return true;
+//			}
+//			showWarningDialog(fItem, context);
+//
+//			return true;
 		}
 
 		return false;

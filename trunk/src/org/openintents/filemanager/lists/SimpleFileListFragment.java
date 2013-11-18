@@ -11,6 +11,7 @@ import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.util.CopyHelper;
 import org.openintents.filemanager.util.FileUtils;
 import org.openintents.filemanager.util.MenuUtils;
+import org.openintents.filemanager.view.MenuPopWin;
 import org.openintents.filemanager.view.PathBar;
 import org.openintents.filemanager.view.PathBar.Mode;
 import org.openintents.filemanager.view.PathBar.OnDirectoryChangedListener;
@@ -23,6 +24,7 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,7 +43,7 @@ import com.dm.oifilemgr.R;
  * 
  * @author George Venios
  */
-public class SimpleFileListFragment extends FileListFragment {
+public class SimpleFileListFragment extends FileListFragment implements MenuPopWin.OnOptionsItemSelectedListener{
 	private static final String INSTANCE_STATE_PATHBAR_MODE = "pathbar_mode";
 	
     protected static final int REQUEST_CODE_MULTISELECT = 2;
@@ -52,6 +54,22 @@ public class SimpleFileListFragment extends FileListFragment {
 	private int mSingleSelectionMenu = R.menu.context;
 	private int mMultiSelectionMenu = R.menu.multiselect;
 	
+	private MenuPopWin menuPop;
+    
+    public MenuPopWin createMenuPopWin() {
+        menuPop = new MenuPopWin(getActivity(), new MenuPopWin.OnOptionsItemSelectedListener[] {this});
+        return menuPop;
+    }
+    
+    public void showMenuPopWin() {
+        if(!menuPop.isShowing()) {
+            menuPop.showAtLocation(getActivity().getWindow().getDecorView(),Gravity.BOTTOM, 0, 0);
+            menuPop.update();
+        }else {
+            menuPop.dismiss();
+        }
+    }
+		
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.filelist_browse, null);
@@ -114,8 +132,15 @@ public class SimpleFileListFragment extends FileListFragment {
 		}
 
 		MenuUtils.fillContextMenu((FileHolder) mAdapter.getItem(info.position), menu, mSingleSelectionMenu, inflater, getActivity());
+		
+		createMenuPopWin().builder(menu);
+	    showMenuPopWin();
+		
+		menu.clear();
+		menu.clearHeader();
+		menu.close();
 	}
-
+	
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		FileHolder fh = (FileHolder) mAdapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
