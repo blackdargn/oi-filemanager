@@ -24,6 +24,7 @@ import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.lists.SimpleFileListFragment;
 import org.openintents.filemanager.util.FileUtils;
 import org.openintents.filemanager.util.UIUtils;
+import org.openintents.filemanager.view.MenuPopWin;
 import org.openintents.intents.FileManagerIntents;
 import org.openintents.util.MenuIntentOptionsWithIcons;
 
@@ -34,6 +35,7 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,12 +45,35 @@ import android.view.ViewGroup;
 import com.dm.DMUtil;
 import com.dm.oifilemgr.R;
 
-public class FileManagerActivity extends DistributionLibraryFragmentActivity {
+public class FileManagerActivity extends DistributionLibraryFragmentActivity implements MenuPopWin.OnOptionsItemSelectedListener{
 	private static final String FRAGMENT_TAG = "ListFragment";
     
     protected static final int REQUEST_CODE_BOOKMARKS = 1;
 	
 	private SimpleFileListFragment mFragment;
+	
+	private MenuPopWin menuPop;
+	
+	public MenuPopWin createMenuPopWin() {
+	    menuPop = new MenuPopWin(this, new MenuPopWin.OnOptionsItemSelectedListener[] {this, mFragment});
+	    return menuPop;
+	}
+	
+	public void showMenuPopWin() {
+	    if(!menuPop.isShowing()) {
+	        menuPop.showAtLocation(getWindow().getDecorView(),Gravity.BOTTOM, 0, 0);
+	        menuPop.update();
+	    }else {
+	        menuPop.dismiss();
+	    }
+	}
+	
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu) {
+	    createMenuPopWin().builder(menu);
+	    showMenuPopWin();
+	    return false;
+	}
 	
 	@Override
 	protected void onNewIntent(Intent intent) {
