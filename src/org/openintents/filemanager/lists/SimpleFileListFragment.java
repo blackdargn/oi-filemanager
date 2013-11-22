@@ -273,6 +273,7 @@ public class SimpleFileListFragment extends FileListFragment implements MenuPopW
 		    MenuUtils.addBookMarker(getActivity(), new FileHolder(new File(getPath()), getActivity()));
     		return true;
 		default:
+		    onContextItemSelected(item);
 			return false;
 		}
 	}
