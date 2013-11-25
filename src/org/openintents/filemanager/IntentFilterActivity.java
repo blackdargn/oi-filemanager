@@ -16,7 +16,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
+import android.view.ViewGroup;
 
+import com.dm.DMUtil;
 import com.dm.oifilemgr.R;
 
 public class IntentFilterActivity extends FragmentActivity {
@@ -75,6 +77,11 @@ public class IntentFilterActivity extends FragmentActivity {
 	}
 
 	private void chooseListType(Intent intent, Bundle extras) {
+	    
+	    setContentView(R.layout.activity_template);
+        DMUtil.bindView(this, (ViewGroup)findViewById(R.id.topBarLay), DMUtil.FlexibleInlinePPID1);
+        DMUtil.bindView(this, (ViewGroup)findViewById(R.id.btmBarLay), DMUtil.FlexibleInlinePPID2);
+        
 		// Multiselect
 		if (FileManagerIntents.ACTION_MULTI_SELECT.equals(intent.getAction())) {
 			String tag = "MultiSelectListFragment";
@@ -91,7 +98,7 @@ public class IntentFilterActivity extends FragmentActivity {
 				setTitle(R.string.multiselect_title);
 
 				getSupportFragmentManager().beginTransaction()
-						.add(android.R.id.content, mFragment, tag).commit();
+						.add(R.id.containerLay, mFragment, tag).commit();
 			}
 		}
 		// Item pickers
@@ -124,7 +131,7 @@ public class IntentFilterActivity extends FragmentActivity {
 				mFragment.setArguments(extras);
 				getSupportFragmentManager()
 						.beginTransaction()
-						.add(android.R.id.content, mFragment,
+						.add(R.id.containerLay, mFragment,
 								PickFileListFragment.class.getName()).commit();
 			}
 		}else {
