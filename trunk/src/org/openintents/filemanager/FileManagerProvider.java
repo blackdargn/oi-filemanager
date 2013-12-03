@@ -24,7 +24,7 @@ import com.dm.oifilemgr.R;
 
 public class FileManagerProvider extends ContentProvider {
 
-	public static final String FILE_PROVIDER_PREFIX = "content://org.openintents.filemanager";
+	public static final String FILE_PROVIDER_PREFIX = "content://com.dm.oifilemgr";
 	private static final String TAG = "FileManagerProvider";
 	public static final String AUTHORITY = "com.dm.oifilemgr";
 	private MimeTypes mMimeTypes;
