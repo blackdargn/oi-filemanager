@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dm.oifilemgr"
     android:installLocation="auto"
-    android:versionCode="28"
-    android:versionName="3.8" >
+    android:versionCode="41"
+    android:versionName="5.1" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -136,24 +136,10 @@
         </activity>
         <provider
             android:name="org.openintents.filemanager.bookmarks.BookmarksProvider"
-            android:authorities="com.dm.oifilemgr.bookmarks">
-        </provider>
-        <provider
-            android:name="org.openintents.filemanager.search.SearchResultsProvider"
-            android:authorities="com.dm.oifilemgr.search" >
-        </provider>
-        <provider
-            android:name="org.openintents.filemanager.search.SearchSuggestionsProvider"
-            android:authorities="com.dm.oifilemgr.search.suggest" >
-        </provider>
+            android:authorities="com.dm.oifilemgr.bookmarks"/>        
         <provider
             android:name="org.openintents.filemanager.FileManagerProvider"
-            android:authorities="com.dm.oifilemgr" >
-        </provider>
-        <provider
-            android:name="org.openintents.filemanager.search.RecentsSuggestionsProvider"
-            android:authorities="com.dm.oifilemgr.search.SuggestionProvider" >
-        </provider>
+            android:authorities="com.dm.oifilemgr" />
         <service android:name="org.openintents.filemanager.search.SearchService" >
             <intent-filter>
                 <action android:name="android.dm.start_search" />

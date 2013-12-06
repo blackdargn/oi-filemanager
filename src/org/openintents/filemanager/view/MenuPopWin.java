@@ -70,12 +70,13 @@ public class MenuPopWin extends PopupWindow implements OnClickListener{
             text.setTextColor(Color.GRAY);
         }
         text.setGravity(Gravity.CENTER);
-        text.setPadding(1, 1, 1, 1);
-        
+        text.setPadding(3, 3, 3, 3);
+        /**
         ImageView img = new ImageView(this.mContext);
         img.setBackgroundDrawable(item.getIcon());
         result.addView(img, new LinearLayout.LayoutParams(new LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)));
+        */
         result.addView(text, new LinearLayout.LayoutParams(new LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)));
 

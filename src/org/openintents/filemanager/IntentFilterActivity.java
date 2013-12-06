@@ -79,7 +79,7 @@ public class IntentFilterActivity extends FragmentActivity {
 	private void chooseListType(Intent intent, Bundle extras) {
 	    
 	    setContentView(R.layout.activity_template);
-        DMUtil.bindView(this, (ViewGroup)findViewById(R.id.topBarLay), DMUtil.FlexibleInlinePPID1);
+	    if(!DMUtil.isRealease) DMUtil.bindView(this, (ViewGroup)findViewById(R.id.topBarLay), DMUtil.FlexibleInlinePPID1);
         DMUtil.bindView(this, (ViewGroup)findViewById(R.id.btmBarLay), DMUtil.FlexibleInlinePPID2);
         
 		// Multiselect

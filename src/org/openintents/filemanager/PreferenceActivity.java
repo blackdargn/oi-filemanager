@@ -17,7 +17,6 @@
 package org.openintents.filemanager;
 
 import org.openintents.filemanager.compatibility.HomeIconHelper;
-import org.openintents.filemanager.search.SearchableActivity;
 import org.openintents.filemanager.util.UIUtils;
 
 import android.app.AlertDialog;
@@ -82,7 +81,6 @@ public class PreferenceActivity extends android.preference.PreferenceActivity
 				.setIcon(android.R.drawable.ic_dialog_alert)
 				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				    public void onClick(DialogInterface dialog, int whichButton) {
-				    	SearchableActivity.clearSearchRecents(PreferenceActivity.this);
 				    	Toast.makeText(PreferenceActivity.this, R.string.search_history_cleared, Toast.LENGTH_SHORT).show();
 				    }})
 				 .setNegativeButton(android.R.string.cancel, null).show();

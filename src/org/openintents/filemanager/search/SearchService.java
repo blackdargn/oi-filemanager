@@ -3,13 +3,14 @@ package org.openintents.filemanager.search;
 import java.io.File;
 
 import org.openintents.filemanager.ThumbnailLoader;
+import org.openintents.filemanager.util.MessageBus;
+import org.openintents.filemanager.util.MessageBus.MMessage;
 import org.openintents.intents.FileManagerIntents;
 
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 /**
@@ -23,21 +24,13 @@ public class SearchService extends Service implements Runnable {
     public static final String ACTION_START_SEARCH = "android.dm.start_search";
     public static final String ACTION_STOP_SEARCH  = "android.dm.stop_search";
     
-	/**
-	 * Used to inform the SearchableActivity of search start and end.
-	 */
-	private LocalBroadcastManager lbm;
 	private SearchCore searcher;
 	private Intent mIntent;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
-		lbm = LocalBroadcastManager.getInstance(getApplicationContext());
-		
 		searcher = new SearchCore(this);
-		searcher.setURI(SearchResultsProvider.CONTENT_URI);
 	}
 
 	protected void onHandleIntent(Intent intent) {
@@ -53,15 +46,17 @@ public class SearchService extends Service implements Runnable {
 			root = new File("/");
 
 		// Search started, let Receivers know.
-		lbm.sendBroadcast(new Intent(FileManagerIntents.ACTION_SEARCH_STARTED));
-
+		MMessage msg = MessageBus.getBusFactory().createMessage(FileManagerIntents.MSG_SEARCH_STARTED);
+		MessageBus.getBusFactory().send(msg);
+		
 		// Search in current path.
 		searcher.dropPreviousResults();
 		searcher.setRoot(root);
 		searcher.search(root);
 
 		// Search is over, let Receivers know.
-		lbm.sendBroadcast(new Intent(FileManagerIntents.ACTION_SEARCH_FINISHED));
+		MMessage msg2 = MessageBus.getBusFactory().createMessage(FileManagerIntents.MSG_SEARCH_FINISHED);
+        MessageBus.getBusFactory().send(msg2);
 	}
 
 	@Override

@@ -50,9 +50,9 @@ public final class FileManagerIntents {
 	 */
 	public static final String ACTION_MULTI_SELECT = "org.openintents.action.MULTI_SELECT";
 
-	public static final String ACTION_SEARCH_STARTED = "org.openintents.action.SEARCH_STARTED";
-	
-	public static final String ACTION_SEARCH_FINISHED = "org.openintens.action.SEARCH_FINISHED";
+	public static final int MSG_SEARCH_STARTED = 0x09341100;
+	public static final int MSG_SEARCH_RESULT = 0x09341101;
+	public static final int MSG_SEARCH_FINISHED = 0x09341102;	
 	
 	/**
 	 * The title to display.

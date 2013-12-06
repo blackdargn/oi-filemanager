@@ -1,6 +1,7 @@
 package org.openintents.filemanager;
 
 import org.openintents.filemanager.util.CopyHelper;
+import org.openintents.filemanager.util.MessageBus;
 
 import android.app.Application;
 
@@ -12,6 +13,7 @@ public class FileManagerApplication extends Application{
 		super.onCreate();
 		
 		mCopyHelper = new CopyHelper(this);
+		MessageBus.getBusFactory();
 	}
 	
 	public CopyHelper getCopyHelper(){

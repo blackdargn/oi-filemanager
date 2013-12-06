@@ -46,12 +46,14 @@ public class DMListActivity extends ListActivity {
         View view = getLayoutInflater().inflate(layoutResID, null);     
         containerLay.addView(view,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     
-        adView1 = DMUtil.bindView(this, topBarLay, DMUtil.FlexibleInlinePPID1);
+        if(!DMUtil.isRealease) adView1 = DMUtil.bindView(this, topBarLay, DMUtil.FlexibleInlinePPID1);
         adView2 = DMUtil.bindView(this, btmBarLay, DMUtil.FlexibleInlinePPID2);
         
         setContentView(template);
-        MLinelayout line = new MLinelayout(this);
-        line.addView(DMUtil.createAdView(this, DMUtil.FlexibleInlinePPID2));
-        getListView().addFooterView(line);
+        if(!DMUtil.isRealease) {
+            MLinelayout line = new MLinelayout(this);
+            line.addView(DMUtil.createAdView(this, DMUtil.FlexibleInlinePPID2));
+            getListView().addFooterView(line);
+        }
     }
 }
