@@ -3,20 +3,19 @@ package org.openintents.filemanager;
 import java.util.List;
 
 import org.openintents.filemanager.files.FileHolder;
+import org.openintents.filemanager.util.AlpaIndexListAdapter;
 import org.openintents.filemanager.view.ViewHolder;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dm.oifilemgr.R;
 
-public class FileHolderListAdapter extends BaseAdapter {
-	private List<FileHolder> mItems;
+public class FileHolderListAdapter extends AlpaIndexListAdapter<FileHolder> {
 	private LayoutInflater mInflater;
 	private Context mContext;
 	private int mItemLayoutId = R.layout.item_filelist;
@@ -25,7 +24,8 @@ public class FileHolderListAdapter extends BaseAdapter {
     private boolean scrolling = false;
 	
 	public FileHolderListAdapter(List<FileHolder> files, Context c){
-		mItems = files;
+	    super(c);
+	    mList = files;
 		mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mContext = c;
 		
@@ -35,12 +35,7 @@ public class FileHolderListAdapter extends BaseAdapter {
 	public void destory() {
 	    mThumbnailLoader.cancel();
 	}
-	
-	public synchronized void setList(List<FileHolder> files) {
-	    mItems = files;
-	    notifyDataSetChanged();
-	}
-	
+		
 	public Context getContext(){
 		return mContext;
 	}
@@ -50,20 +45,6 @@ public class FileHolderListAdapter extends BaseAdapter {
 		return true;
 	}
 	
-	@Override
-	public int getCount() {
-		return mItems.size();
-	}
-
-	@Override
-	public Object getItem(int position){
-		return mItems.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
 	
 	/**
 	 * Set the layout to be used for item drawing. 
@@ -95,7 +76,7 @@ public class FileHolderListAdapter extends BaseAdapter {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		FileHolder item = mItems.get(position);
+		FileHolder item = getItem(position);
 		
 		if(convertView == null)
 			convertView = newView();

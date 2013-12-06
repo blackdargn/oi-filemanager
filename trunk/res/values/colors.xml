@@ -1,10 +1,10 @@
 
     <resources>
-        <color name="navbar_details">#CCFFFFFF</color>
-        
+        <color name="navbar_details">#CCFFFFFF</color>        
         <!-- Borderless button colors -->
         <color name="press">#400099CC</color>
-        <color name="focus">#800099CC</color>
-        
+        <color name="focus">#800099CC</color>      
         <color name="menu_divder">#FFFFFFFF</color>
+         <!-- 透明颜色 -->
+    	<drawable name="bg_transparent">#00000000</drawable>
     </resources>

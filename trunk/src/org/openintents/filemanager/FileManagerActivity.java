@@ -103,9 +103,8 @@ public class FileManagerActivity extends DistributionLibraryFragmentActivity imp
 	@Override
 	public void onCreate(Bundle icicle) {
 		UIUtils.setThemeFor(this);
-		
-		super.onCreate(icicle);
-		        
+		DMUtil.checkShowAd(this);
+		super.onCreate(icicle);		        
 		// Enable home button.
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 			HomeIconHelper.activity_actionbar_setHomeButtonEnabled(this);
@@ -117,7 +116,7 @@ public class FileManagerActivity extends DistributionLibraryFragmentActivity imp
 		File data = resolveIntentData();
 		
 		setContentView(R.layout.activity_template);
-		DMUtil.bindView(this, (ViewGroup)findViewById(R.id.topBarLay), DMUtil.FlexibleInlinePPID1);
+		if(!DMUtil.isRealease) DMUtil.bindView(this, (ViewGroup)findViewById(R.id.topBarLay), DMUtil.FlexibleInlinePPID1);
 		DMUtil.bindView(this, (ViewGroup)findViewById(R.id.btmBarLay), DMUtil.FlexibleInlinePPID2);
 		
 		// Add fragment only if it hasn't already been added.

@@ -39,7 +39,7 @@ public class DMActivity extends Activity {
         View view = getLayoutInflater().inflate(layoutResID, null);     
         containerLay.addView(view,new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     
-        adView1 = DMUtil.bindView(this, topBarLay, DMUtil.FlexibleInlinePPID1);
+        if(!DMUtil.isRealease) adView1 = DMUtil.bindView(this, topBarLay, DMUtil.FlexibleInlinePPID1);
         adView2 = DMUtil.bindView(this, btmBarLay, DMUtil.FlexibleInlinePPID2);
     }
 }

@@ -4,8 +4,10 @@ import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
 
+import org.openintents.filemanager.util.AlpaIndexListAdapter.PYRender;
 import org.openintents.filemanager.util.FileUtils;
 import org.openintents.filemanager.util.MimeTypes;
+import org.openintents.filemanager.util.PinyinUtil;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -14,12 +16,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.format.Formatter;
 
-public class FileHolder implements Parcelable, Comparable<FileHolder> {
+public class FileHolder implements Parcelable, Comparable<FileHolder>,PYRender {
 	private File mFile;
 	private Drawable mIcon;
 	private String mMimeType = "";
 	private Context mContext;
 	private String mExtension;
+	private String pyName;
 	
 	public FileHolder(File f, Context c){
 		mFile = f;
@@ -174,4 +177,12 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	    }
 	    return ext;
 	}
+
+    @Override
+    public String getPYName() {
+        if(pyName == null) {
+            pyName = PinyinUtil.stringArrayToString(PinyinUtil.getHeadByString(getName()));
+        }
+        return pyName;
+    }
 }

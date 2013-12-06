@@ -5,14 +5,12 @@ import java.io.File;
 import org.openintents.filemanager.FileManagerActivity;
 import org.openintents.filemanager.files.FileHolder;
 import org.openintents.filemanager.search.SearchListAdapter;
-import org.openintents.filemanager.search.SearchResultsProvider;
 import org.openintents.filemanager.search.SearchableActivity;
 import org.openintents.filemanager.util.FileUtils;
 import org.openintents.filemanager.util.MenuUtils;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -29,7 +27,6 @@ import com.dm.oifilemgr.R;
 public class SearchFileListFragment extends RefreshListFragment{
 
     private int mSingleSelectionMenu = R.menu.context;
-    private Cursor searchResults;
     private SearchListAdapter mAdapter;
     
     @Override
@@ -46,13 +43,12 @@ public class SearchFileListFragment extends RefreshListFragment{
     
     public void handIntent(String query, Activity activity) {
         // Set the list adapter.
-        searchResults = getSearchResults(activity);
-        mAdapter = new SearchListAdapter(activity, searchResults);
+        mAdapter = new SearchListAdapter(activity);
         setListAdapter(mAdapter);
     }
     
-    private Cursor getSearchResults(Activity activity) {
-        return activity.getContentResolver().query(SearchResultsProvider.CONTENT_URI, null, null, null, SearchResultsProvider.COLUMN_ID + " ASC");
+    public void addResult(String path) {
+        mAdapter.addItem(path);
     }
     
     @Override
@@ -69,18 +65,18 @@ public class SearchFileListFragment extends RefreshListFragment{
             return;
         }
 
-        MenuUtils.fillContextMenu((FileHolder) mAdapter.getItem(info.position), menu, mSingleSelectionMenu, inflater, getActivity());
+        MenuUtils.fillContextMenu((FileHolder) mAdapter.getFileItem(info.position), menu, mSingleSelectionMenu, inflater, getActivity());
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int position = ((AdapterContextMenuInfo) item.getMenuInfo()).position;
-        return MenuUtils.handleSingleSelectionAction(this, item, mAdapter.getItem(position), getActivity());
+        return MenuUtils.handleSingleSelectionAction(this, item, mAdapter.getFileItem(position), getActivity());
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {       
-        String path = mAdapter.getItem(position).getFile().getAbsolutePath();       
+        String path = mAdapter.getFileItem(position).getFile().getAbsolutePath();       
         browse(path);
     }
     

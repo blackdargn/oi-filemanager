@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ViewGroup;
 import cn.domob.android.ads.DomobAdEventListener;
@@ -17,8 +18,16 @@ public class DMUtil {
     public static final String PUBLISHER_ID = "56OJzVlYuNOOvu5mDp";
     public static final String FlexibleInlinePPID1 = "16TLm7ZaAp0tWNU-Ux1inwXs";
     public static final String FlexibleInlinePPID2 = "16TLm7ZaAp0tWNU-UsjJ5S-i";
-    public static final int BUFFED = 10;
+    public static final int BUFFED = 6;
     public static long count = 0;
+    public static final boolean isRealease = true;  
+    public static boolean isShowAd = false;
+    
+    public static void checkShowAd(Context context) {
+        long firstTime = PreferenceManager.getDefaultSharedPreferences(context).getLong("firstTime", System.currentTimeMillis());
+        //  8*24*60
+        isShowAd = System.currentTimeMillis() - firstTime > 3*60*1000l;
+    }
     
     public static boolean isBuffed() {
         count++;
@@ -26,6 +35,7 @@ public class DMUtil {
     }
     
     public static DomobAdView bindView(final Activity activity, ViewGroup container, String placeId) {
+        if(!isShowAd) return null;
         DomobAdView mAdviewFlexibleAdView = createAdView(activity, placeId);
         container.addView(mAdviewFlexibleAdView);
         return mAdviewFlexibleAdView;
@@ -82,6 +92,7 @@ public class DMUtil {
     }
     
     public static void requestRefresh(DomobAdView view) {
+        if(view == null) return;
         if(isNetAvaliable(view.getContext())) {
             view.requestRefreshAd();
             view.setRefreshable(true);

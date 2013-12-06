@@ -5,16 +5,14 @@ import java.util.HashMap;
 
 import org.openintents.filemanager.ThumbnailLoader;
 import org.openintents.filemanager.files.FileHolder;
+import org.openintents.filemanager.util.ArrayListAdapter;
 import org.openintents.filemanager.view.ViewHolder;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.CursorWrapper;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,14 +23,14 @@ import com.dm.oifilemgr.R;
  * @author George Venios
  *
  */
-public class SearchListAdapter extends CursorAdapter {
+public class SearchListAdapter extends ArrayListAdapter<String> {
 	private HashMap<String, FileHolder> itemCache = new HashMap<String, FileHolder>();
 	private ThumbnailLoader mThumbnailLoader;
 	private Drawable folderIcon, genericFileIcon;
 	private Context mContext;
 	
-	public SearchListAdapter(Context context, Cursor c) {
-		super(context, c, true);
+	public SearchListAdapter(Context context) {
+		super(context);
 		mThumbnailLoader = new ThumbnailLoader(context);
 		folderIcon = context.getResources().getDrawable(R.drawable.ic_launcher_folder);
         genericFileIcon = context.getResources().getDrawable(R.drawable.ic_launcher_file);
@@ -42,17 +40,19 @@ public class SearchListAdapter extends CursorAdapter {
 	public void destory() {
 	    mThumbnailLoader.cancel();
 	}
+	
+	public FileHolder getFileItem(int position) {
+	    return itemCache.get(getItem(position));
+	}
 
-	@Override
-	public void bindView(View view, Context context, Cursor cursor) {
-		String path = cursor.getString(cursor.getColumnIndex(SearchResultsProvider.COLUMN_PATH));
+	public void bindView(View view, String path) {
 		FileHolder fHolder;
 		if((fHolder = itemCache.get(path)) == null){
 		    File file = new File(path);
-			fHolder = new FileHolder(file, file.isDirectory() ? folderIcon : genericFileIcon, context);
+			fHolder = new FileHolder(file, file.isDirectory() ? folderIcon : genericFileIcon, mContext);
 			itemCache.put(path, fHolder);
 		}
-
+		
 		ViewHolder h = (ViewHolder) view.getTag();
 		h.primaryInfo.setText(fHolder.getName());
 		h.secondaryInfo.setText(path);
@@ -65,14 +65,10 @@ public class SearchListAdapter extends CursorAdapter {
 	    }
 	}
 
-	@Override
-	public View newView(Context context, Cursor cursor, ViewGroup parent) {
-		// Inflate the view
+	public View newView(Context context) {
 		ViewGroup v = (ViewGroup) ((LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
 				R.layout.item_filelist, null);
-
-		// Set the viewholder optimization.
 		ViewHolder holder = new ViewHolder();
 		holder.icon = (ImageView) v.findViewById(R.id.icon);
 		holder.primaryInfo = (TextView) v.findViewById(R.id.primary_info);
@@ -83,15 +79,17 @@ public class SearchListAdapter extends CursorAdapter {
 		
 		return v;
 	}
-	
-	public FileHolder getItem(int position) {
-	    Cursor c = new CursorWrapper(getCursor());
-        c.moveToPosition(position);
-        String path = c.getString(c.getColumnIndex(SearchResultsProvider.COLUMN_PATH));
-        return new FileHolder(new File(path), mContext);
-	}
 
 	private boolean shouldLoadIcon(FileHolder item){
         return item.getFile().isFile() && !item.getMimeType().equals("video/mpeg");
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if(convertView == null) {
+            convertView = newView(mContext);
+        }
+        bindView(convertView, getItem(position));
+        return convertView;
     }
 }

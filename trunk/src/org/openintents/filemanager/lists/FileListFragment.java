@@ -12,10 +12,13 @@ import org.openintents.filemanager.util.EditTextWatcher;
 import org.openintents.filemanager.util.EditTextWatcher.OnTextChanged;
 import org.openintents.filemanager.util.MenuUtils;
 import org.openintents.filemanager.util.MimeTypes;
+import org.openintents.filemanager.view.MyLetterListView;
 import org.openintents.intents.FileManagerIntents;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,9 +29,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.dm.DMUtil;
@@ -90,6 +96,8 @@ public abstract class FileListFragment extends RefreshListFragment implements On
 	private View toolbar;
 	private View btn_add_book, btn_select, btn_search, btn_new_folder;
 	
+	private TextView overlay;
+	private MyLetterListView letterListView;
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -98,6 +106,20 @@ public abstract class FileListFragment extends RefreshListFragment implements On
 		outState.putString(INSTANCE_STATE_PATH, mPath);
 		outState.putParcelableArrayList(INSTANCE_STATE_FILES, mFiles);
 	}
+	
+    private void initOverlay() {
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        overlay = (TextView) inflater.inflate(R.layout.view_overlay_textview,null);
+        overlay.setVisibility(View.INVISIBLE);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_APPLICATION,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                PixelFormat.TRANSLUCENT);
+        WindowManager windowManager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        windowManager.addView(overlay, lp);
+    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,6 +129,8 @@ public abstract class FileListFragment extends RefreshListFragment implements On
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
+	    initOverlay();
+	    
 		// Set auto refresh on preference change.
 		PreferenceManager.getDefaultSharedPreferences(getActivity())
 				.registerOnSharedPreferenceChangeListener(preferenceListener);
@@ -129,10 +153,11 @@ public abstract class FileListFragment extends RefreshListFragment implements On
 		getListView().requestFocus();
 		getListView().requestFocusFromTouch();
 		
-		MLinelayout line = new MLinelayout(view.getContext());
-        line.addView(DMUtil.createAdView(getActivity(), DMUtil.FlexibleInlinePPID2));
-        getListView().addFooterView(line);
-        
+		if(!DMUtil.isRealease) {
+    		MLinelayout line = new MLinelayout(view.getContext());
+            line.addView(DMUtil.createAdView(getActivity(), DMUtil.FlexibleInlinePPID2));
+            getListView().addFooterView(line);
+		}
 		// Init flipper
 		mFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
 		et_file_filter = (EditText) view.findViewById(R.id.et_file_filter);
@@ -173,17 +198,22 @@ public abstract class FileListFragment extends RefreshListFragment implements On
 		}
 		pathCheckAndFix();
 		renewScanner();
+		
+		letterListView =  (MyLetterListView)view.findViewById(R.id.MyLetterListView);
 		mAdapter = new FileHolderListAdapter(mFiles, getActivity());
-
+		mAdapter.initAlpaIndex(overlay, getListView(), letterListView);
+		letterListView.setOnTouchingLetterChangedListener(mAdapter);
+		
 		setListAdapter(mAdapter);
 		mScanner.start();
-
 	}
 
 	@Override
 	public void onDestroy() {
 		mScanner.cancel();
 		if(mAdapter != null) mAdapter.destory();
+		WindowManager windowManager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+	    windowManager.removeView(overlay);
 		super.onDestroy();
 	}
 

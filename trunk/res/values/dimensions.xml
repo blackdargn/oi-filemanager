@@ -6,4 +6,6 @@
     <dimen name="list_margin">8dp</dimen>
     <dimen name="list_margin_big">32dp</dimen>
     <dimen name="list_margin_huge">56dp</dimen>
+    <!-- 字母的宽度 -->
+	<dimen name="char_width">30dip</dimen>
 </resources>

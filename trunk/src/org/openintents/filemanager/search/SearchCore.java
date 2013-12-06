@@ -3,13 +3,13 @@ package org.openintents.filemanager.search;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import android.app.SearchManager;
-import android.content.ContentValues;
-import android.content.Context;
-import android.net.Uri;
-import android.os.Environment;
+import org.openintents.filemanager.util.MessageBus;
+import org.openintents.filemanager.util.MessageBus.MMessage;
+import org.openintents.intents.FileManagerIntents;
 
-import com.dm.oifilemgr.R;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Environment;
 
 /**
  * Provides the search core, used by every search subsystem that provides results.
@@ -17,10 +17,9 @@ import com.dm.oifilemgr.R;
  * @author George Venios
  * 
  */
+@SuppressLint("DefaultLocale")
 public class SearchCore{
 	private String mQuery;
-	private Uri mContentURI;
-	private Context mContext;
 	/** See {@link #setRoot(File)} */
 	private File root = Environment.getExternalStorageDirectory();
 
@@ -32,11 +31,11 @@ public class SearchCore{
 	public boolean isCancel;
 	
 	public SearchCore(Context context) {
-		mContext = context;
+	    
 	}
 
 	private FilenameFilter filter = new FilenameFilter() {
-		@Override
+        @Override
 		public boolean accept(File dir, String filename) {
 			return mQuery == null ? false : filename.toLowerCase().contains(mQuery.toLowerCase());
 		}
@@ -58,16 +57,6 @@ public class SearchCore{
 	 */
 	public void setRoot(File root) {
 		this.root = root;
-	}
-
-	/**
-	 * Set the content URI, of which the results are. Used for operations on the correct search content providers.
-	 * 
-	 * @param URI
-	 *            The URI.
-	 */
-	public void setURI(Uri URI) {
-		mContentURI = URI;
 	}
 
 	/**
@@ -95,23 +84,9 @@ public class SearchCore{
 	
 	private void insertResult(File f) {
 		mResultCount++;
-
-		ContentValues values = new ContentValues();
-
-		if (mContentURI == SearchResultsProvider.CONTENT_URI) {
-			values.put(SearchResultsProvider.COLUMN_NAME, f.getName());
-			values.put(SearchResultsProvider.COLUMN_PATH, f.getAbsolutePath());
-		} else if (mContentURI == SearchSuggestionsProvider.CONTENT_URI) {
-			values.put(SearchManager.SUGGEST_COLUMN_ICON_1,
-					f.isDirectory() ? R.drawable.ic_launcher_folder
-							: R.drawable.ic_launcher_file);
-			values.put(SearchManager.SUGGEST_COLUMN_TEXT_1, f.getName());
-			values.put(SearchManager.SUGGEST_COLUMN_TEXT_2, f.getAbsolutePath());
-			values.put(SearchManager.SUGGEST_COLUMN_INTENT_DATA,
-					f.getAbsolutePath());
-		}
-
-		mContext.getContentResolver().insert(mContentURI, values);
+		MMessage msg = MessageBus.getBusFactory().createMessage(FileManagerIntents.MSG_SEARCH_RESULT);
+		msg.obj = f.getAbsolutePath();
+        MessageBus.getBusFactory().send(msg);
 	}
 
 	/**
@@ -119,10 +94,9 @@ public class SearchCore{
 	 * 
 	 * @return The previous result count.
 	 */
-	public int dropPreviousResults() {
+	public void dropPreviousResults() {
 		mResultCount = 0;
 		isCancel = false;
-		return mContext.getContentResolver().delete(mContentURI, null, null);
 	}
 
 	/**
@@ -135,7 +109,7 @@ public class SearchCore{
 	    if(isCancel) return;
 	    
 	    try {
-            Thread.sleep(50);
+            Thread.sleep(20);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
