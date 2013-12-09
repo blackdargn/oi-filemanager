@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,9 @@ import com.dm.oifilemgr.R;
 
 public class MenuPopWin extends PopupWindow implements OnClickListener{
     
+    private ImageView mIcon;
+    private TextView    mTitle;
+    private LinearLayout headView;
     private FlowLayout flowView;
     private ConcurrentHashMap<Integer, View> viewMaps = new ConcurrentHashMap<Integer, View>();
     private OnOptionsItemSelectedListener[] mListeners;
@@ -28,18 +32,43 @@ public class MenuPopWin extends PopupWindow implements OnClickListener{
     public MenuPopWin(Context context, OnOptionsItemSelectedListener[] listeners) {
         super(context);
         mContext = context;
-        mListeners = listeners;
+        mListeners = listeners;        
+        LinearLayout rootView = new LinearLayout(context);
+        rootView.setOrientation(LinearLayout.VERTICAL);
+        rootView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));        
         flowView = new FlowLayout(context);
         flowView.setBackgroundResource(R.drawable.bg_menu);
         setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        setContentView(flowView);
+        rootView.addView(flowView);
+        setContentView(rootView);
         setWidth(LayoutParams.FILL_PARENT);
         setHeight(LayoutParams.WRAP_CONTENT);
         // SetFocusable to true,If not set set true,the item in the TabMenu will not handle the touch event.
         setFocusable(true);
     }
     
-    public void builder(Menu menu) {
+    private void addHeadView(String tilte, Drawable icon) {
+        LinearLayout rootView = (LinearLayout)getContentView();
+        if(headView == null) {
+            headView = new LinearLayout(mContext);
+            headView.setOrientation(LinearLayout.HORIZONTAL);
+            headView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            headView.setBackgroundColor(Color.parseColor("#FF9C9C9C"));
+            mIcon = new ImageView(mContext);
+            mIcon.setPadding(3, 3, 3, 3);
+            mTitle = new TextView(mContext);
+            mTitle.setTextColor(Color.WHITE);
+            mTitle.setGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT);        
+            headView.addView(mIcon);
+            headView.addView(mTitle, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+            rootView.addView(headView, 0);
+        }
+        mTitle.setText(tilte);
+        mIcon.setImageDrawable(icon);
+        headView.setVisibility(View.VISIBLE);
+    }
+    
+    public void builder(Menu menu, String title, Drawable icon) {
         flowView.removeAllViews();
         
         int size = menu.size();
@@ -48,6 +77,18 @@ public class MenuPopWin extends PopupWindow implements OnClickListener{
             item = menu.getItem(i);
             flowView.addView(makeMenuBody(item));
         }
+        
+        if(title != null) {
+            addHeadView(title, icon);
+        }else {
+            if(headView != null) {
+                headView.setVisibility(View.GONE);
+            }
+        }
+    }
+    
+    public void builder(Menu menu) {
+        builder(menu, null, null);
     }
     
     private View makeMenuBody(MenuItem item) {

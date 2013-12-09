@@ -24,14 +24,24 @@ public class DMUtil {
     public static boolean isShowAd = false;
     
     public static void checkShowAd(Context context) {
-        long firstTime = PreferenceManager.getDefaultSharedPreferences(context).getLong("firstTime", System.currentTimeMillis());
-        //  8*24*60
-        isShowAd = System.currentTimeMillis() - firstTime > 3*60*1000l;
+        if(isRealease) {
+            long firstTime = PreferenceManager.getDefaultSharedPreferences(context).getLong("firstTime", 0);
+            if(firstTime == 0) {
+                PreferenceManager.getDefaultSharedPreferences(context).edit().putLong("firstTime", firstTime = System.currentTimeMillis()).commit();
+            }
+            isShowAd = System.currentTimeMillis() - firstTime > 5*24*60*60*1000l;
+        }else {
+            isShowAd = true;
+        }
     }
     
     public static boolean isBuffed() {
-        count++;
-        return count%BUFFED != 0;
+        if(isRealease) {
+            return false;
+        }else {
+            count++;
+            return count%BUFFED != 0;
+        }
     }
     
     public static DomobAdView bindView(final Activity activity, ViewGroup container, String placeId) {
