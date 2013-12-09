@@ -131,9 +131,10 @@ public class SimpleFileListFragment extends FileListFragment implements MenuPopW
 			return;
 		}
 
-		MenuUtils.fillContextMenu((FileHolder) mAdapter.getItem(info.position), menu, mSingleSelectionMenu, inflater, getActivity());
+		FileHolder item = (FileHolder) mAdapter.getItem(info.position);
+		MenuUtils.fillContextMenu(item, menu, mSingleSelectionMenu, inflater, getActivity());
 		
-		createMenuPopWin().builder(menu);
+		createMenuPopWin().builder(menu, item.getName(), item.getIcon());
 	    showMenuPopWin();
 		
 		menu.clear();

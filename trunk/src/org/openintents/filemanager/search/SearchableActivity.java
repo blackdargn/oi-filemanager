@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -30,8 +29,7 @@ import com.dm.oifilemgr.R;
 public class SearchableActivity extends FragmentActivity {
     
     private static final String FRAGMENT_TAG = "SearchListFragment";  
-    private SearchFileListFragment mFragment;   
-	private LocalBroadcastManager lbm;
+    private SearchFileListFragment mFragment;
 	private String mPath, mQuery;
 	
 	@Override
@@ -43,8 +41,7 @@ public class SearchableActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			HomeIconHelper.activity_actionbar_setDisplayHomeAsUpEnabled(this);
-		}		
-		lbm = LocalBroadcastManager.getInstance(getApplicationContext());
+		}
 		setContentView(R.layout.activity_template);
 		DMUtil.bindView(this, (ViewGroup)findViewById(R.id.btmBarLay),DMUtil.FlexibleInlinePPID2);
 		

@@ -8,6 +8,7 @@ import org.openintents.filemanager.search.SearchListAdapter;
 import org.openintents.filemanager.search.SearchableActivity;
 import org.openintents.filemanager.util.FileUtils;
 import org.openintents.filemanager.util.MenuUtils;
+import org.openintents.filemanager.view.MenuPopWin;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,10 +26,26 @@ import android.widget.ListView;
 
 import com.dm.oifilemgr.R;
 
-public class SearchFileListFragment extends RefreshListFragment{
+public class SearchFileListFragment extends RefreshListFragment  implements MenuPopWin.OnOptionsItemSelectedListener{
 
     private int mSingleSelectionMenu = R.menu.context;
     private SearchListAdapter mAdapter;
+    
+    private MenuPopWin menuPop;
+    
+    public MenuPopWin createMenuPopWin() {
+        menuPop = new MenuPopWin(getActivity(), new MenuPopWin.OnOptionsItemSelectedListener[] {this});
+        return menuPop;
+    }
+    
+    public void showMenuPopWin() {
+        if(!menuPop.isShowing()) {
+            menuPop.showAtLocation(getActivity().getWindow().getDecorView(),Gravity.BOTTOM, 0, 0);
+            menuPop.update();
+        }else {
+            menuPop.dismiss();
+        }
+    }
     
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -64,19 +82,36 @@ public class SearchFileListFragment extends RefreshListFragment{
             e.printStackTrace();
             return;
         }
-
-        MenuUtils.fillContextMenu((FileHolder) mAdapter.getFileItem(info.position), menu, mSingleSelectionMenu, inflater, getActivity());
+        
+        FileHolder item = (FileHolder) mAdapter.getItem(info.position);
+        MenuUtils.fillContextMenu(item, menu, mSingleSelectionMenu, inflater, getActivity());
+        
+        createMenuPopWin().builder(menu, item.getName(), item.getIcon());
+        showMenuPopWin();
+        
+        menu.clear();
+        menu.clearHeader();
+        menu.close();
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getMenuInfo() != null) {
+            onContextItemSelected(item);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int position = ((AdapterContextMenuInfo) item.getMenuInfo()).position;
-        return MenuUtils.handleSingleSelectionAction(this, item, mAdapter.getFileItem(position), getActivity());
+        return MenuUtils.handleSingleSelectionAction(this, item, mAdapter.getItem(position), getActivity());
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {       
-        String path = mAdapter.getFileItem(position).getFile().getAbsolutePath();       
+        String path = mAdapter.getItem(position).getFile().getAbsolutePath();       
         browse(path);
     }
     

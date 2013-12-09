@@ -1,7 +1,6 @@
 package org.openintents.filemanager.search;
 
 import java.io.File;
-import java.util.HashMap;
 
 import org.openintents.filemanager.ThumbnailLoader;
 import org.openintents.filemanager.files.FileHolder;
@@ -23,8 +22,7 @@ import com.dm.oifilemgr.R;
  * @author George Venios
  *
  */
-public class SearchListAdapter extends ArrayListAdapter<String> {
-	private HashMap<String, FileHolder> itemCache = new HashMap<String, FileHolder>();
+public class SearchListAdapter extends ArrayListAdapter<FileHolder> {
 	private ThumbnailLoader mThumbnailLoader;
 	private Drawable folderIcon, genericFileIcon;
 	private Context mContext;
@@ -41,21 +39,16 @@ public class SearchListAdapter extends ArrayListAdapter<String> {
 	    mThumbnailLoader.cancel();
 	}
 	
-	public FileHolder getFileItem(int position) {
-	    return itemCache.get(getItem(position));
+	public void addItem(String path) {
+	    File file = new File(path);
+	    FileHolder fHolder = new FileHolder(file, file.isDirectory() ? folderIcon : genericFileIcon, mContext); 
+        addItem(fHolder);
 	}
 
-	public void bindView(View view, String path) {
-		FileHolder fHolder;
-		if((fHolder = itemCache.get(path)) == null){
-		    File file = new File(path);
-			fHolder = new FileHolder(file, file.isDirectory() ? folderIcon : genericFileIcon, mContext);
-			itemCache.put(path, fHolder);
-		}
-		
+	public void bindView(View view, FileHolder fHolder) {		
 		ViewHolder h = (ViewHolder) view.getTag();
 		h.primaryInfo.setText(fHolder.getName());
-		h.secondaryInfo.setText(path);
+		h.secondaryInfo.setText(fHolder.getFile().getAbsolutePath());
 		h.icon.setImageDrawable(fHolder.getIcon());
 		
 		 if(shouldLoadIcon(fHolder)){
