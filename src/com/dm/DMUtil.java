@@ -20,7 +20,7 @@ public class DMUtil {
     public static final String FlexibleInlinePPID2 = "16TLm7ZaAp0tWNU-UsjJ5S-i";
     public static final int BUFFED = 6;
     public static long count = 0;
-    public static final boolean isRealease = true;  
+    public static final boolean isRealease = false;  
     public static boolean isShowAd = false;
     
     public static void checkShowAd(Context context) {
