@@ -1,13 +1,16 @@
 package org.openintents.filemanager.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.openintents.filemanager.view.MyLetterListView;
 import org.openintents.filemanager.view.MyLetterListView.OnTouchingLetterChangedListener;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.view.View;
@@ -40,7 +43,7 @@ public abstract class AlpaIndexListAdapter<T> extends ArrayListAdapter<T> implem
         super.setList(files);
         initData();
     }
-      
+    
     /** 只支持 实现了 T implements PYRender 的类型，不然报错*/
     protected void initData() {
         if(alphaIndexer == null || mList == null || mList.size() == 0) {
@@ -50,21 +53,43 @@ public abstract class AlpaIndexListAdapter<T> extends ArrayListAdapter<T> implem
             return;
         }
         if(letterListView != null) {
-            letterListView.setVisibility(getCount() < 8 ? View.GONE : View.VISIBLE);
-        }
-        String currentStr, previewStr;
-        try {
-            for (int i = 0; i < mList.size(); i++) {
-                  currentStr = getAlpha(((PYRender)mList.get(i)).getPYName());
-                  previewStr = getAlpha((i - 1) >= 0 ? ((PYRender)mList.get(i - 1)).getPYName() : "");
-                  if (!currentStr.equals(previewStr)) {
-                      alphaIndexer.put(currentStr, i);
-                  }
+            if(getCount() < 8) {
+                letterListView.setVisibility(View.GONE);
+                return;
+            }else {
+                letterListView.setVisibility(View.VISIBLE);
             }
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-        alphaIndexer.put("#", 0);
+            
+            String currentStr, previewStr;
+            alphaIndexer.clear();
+            try {
+                for (int i = 0; i < mList.size(); i++) {
+                      currentStr = getAlpha(((PYRender)mList.get(i)).getPYName());
+                      previewStr = getAlpha((i - 1) >= 0 ? ((PYRender)mList.get(i - 1)).getPYName() : "");
+                      if (!currentStr.equals(previewStr)) {
+                          alphaIndexer.put(currentStr, i);
+                      }
+                }
+                alphaIndexer.put("#", 0);
+                Set<String> keys = alphaIndexer.keySet();
+                if(keys.size() >= 4) {
+                    List<String> keyList = new ArrayList<String>(keys.size());
+                    keyList.addAll(keys);
+                    Collections.sort(keyList, new Comparator<String>() {
+                        @Override
+                        public int compare(String f1, String f2) {
+                            return f1.toLowerCase().compareTo(f2.toLowerCase());
+                        }
+                    });
+                    letterListView.setLetters(keyList);
+                    letterListView.setVisibility(View.VISIBLE);
+                }else {
+                    letterListView.setVisibility(View.GONE);
+                }
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+        }        
     }
     
     @Override
@@ -91,7 +116,6 @@ public abstract class AlpaIndexListAdapter<T> extends ArrayListAdapter<T> implem
         }
     }
     
-    @SuppressLint("DefaultLocale")
     public static String getAlpha(String str) {
         if (str == null) { return "#"; }
 
@@ -100,16 +124,12 @@ public abstract class AlpaIndexListAdapter<T> extends ArrayListAdapter<T> implem
         char c = str.trim().substring(0, 1).charAt(0);
 
         Pattern pattern = Pattern.compile("^[A-Za-z]+$");
-        Pattern patternC = Pattern.compile("^[\u4e00-\u9fa5]+$");
-        // 字母
-        if (pattern.matcher(c + "").matches()) {
+        Pattern patternB = Pattern.compile("^[0-9]+$");
+        Pattern patternDot = Pattern.compile("^[\\.]+$");
+        // 字母 数字 点
+        if (pattern.matcher(c + "").matches() || patternB.matcher(c + "").matches() || patternDot.matcher(c + "").matches()) {
             return (c + "").toUpperCase();
-        } else 
-        // 中文
-        if(patternC.matcher(c + "").matches())
-        {
-            return c + "";
-        }else
+        } else
         // 其它 #
         {
             return "#";

@@ -1,5 +1,8 @@
 package org.openintents.filemanager.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -12,13 +15,12 @@ import android.view.View;
 
 import com.dm.oifilemgr.R;
 
-
-
 public class MyLetterListView extends View {
 	
     private OnTouchingLetterChangedListener onTouchingLetterChangedListener;
-    private String[] b = {"#","A","B","C","D","E","F","G","H","I","J","K","L"
+    String[] b = {"#","A","B","C","D","E","F","G","H","I","J","K","L"
 			,"M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+    private List<String> letters = new ArrayList<String>();
 	private int choose = -1;
 	private Paint paint = new Paint();
 	private boolean showBkg = false;
@@ -26,6 +28,9 @@ public class MyLetterListView extends View {
 	
 	public MyLetterListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		letters.add("#");
+        paint.setTypeface(Typeface.DEFAULT_BOLD);
+        paint.setAntiAlias(true);
 	}
 
 	public MyLetterListView(Context context, AttributeSet attrs) {
@@ -36,29 +41,40 @@ public class MyLetterListView extends View {
 		this(context, null);
 	}
 	
+	public synchronized void setLetters(List<String> list) {
+	    letters.clear();
+	    if(list == null || list.size() == 0) {
+	        for(String a : b) {
+	            letters.add(a);
+	        }	        
+	    }else {
+	        for(String a : list) {
+                letters.add(a);
+            }
+	    }
+	    textSize = 0;
+	    invalidate();
+	}
+	
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		if(showBkg){
 //		    canvas.drawColor(Color.parseColor("#40000000"));
-		}
-		
+		}		
 	    int height = getHeight();
-	    int width  = getWidth();	    
-	    int singleHeight = height / b.length;
+	    int width  = getWidth();
+	    int letterSize = letters.size();
+	    int singleHeight = height / letterSize;
 	    adjustTextSize(singleHeight);
-	    
-	    for(int i=0;i<b.length;i++){
-	       paint.setColor(Color.parseColor("#666666"));
-	       paint.setTypeface(Typeface.DEFAULT_BOLD);
-	       paint.setAntiAlias(true);
+	    for(int i=0; i< letterSize; i++){
 	       if(i == choose){
 	    	   paint.setColor(Color.parseColor("#3399ff"));
-	    	   paint.setFakeBoldText(true);
+	       }else {
+	           paint.setColor(Color.parseColor("#666666"));
 	       }
-	       float xPos = width/2  - paint.measureText(b[i])/2;
+	       float xPos = width/2  - paint.measureText(letters.get(i))/2;
 	       float yPos = singleHeight * i + singleHeight;
-	       canvas.drawText(b[i], xPos, yPos, paint);
-	       paint.reset();
+	       canvas.drawText(letters.get(i), xPos, yPos, paint);
 	    }
 	}
 	
@@ -68,15 +84,16 @@ public class MyLetterListView extends View {
 	    final float y = event.getY();
 	    final int oldChoose = choose;
 	    final OnTouchingLetterChangedListener listener = onTouchingLetterChangedListener;
-	    final int c = (int) (y/getHeight()*b.length);
+	    final int letterSize = letters.size();
+	    final int c = (int) (y/getHeight()*letterSize);
 	    
 		switch (action) {
 			case MotionEvent.ACTION_DOWN:
 				showBkg = true;
 				setBackgroundResource(R.drawable.bg_char);
 				if(oldChoose != c && listener != null){
-					if(c >= 0 && c< b.length){
-						listener.onTouchingLetterChanged(b[c]);
+					if(c >= 0 && c< letterSize){
+						listener.onTouchingLetterChanged(letters.get(c));
 						choose = c;
 						invalidate();
 					}
@@ -85,8 +102,8 @@ public class MyLetterListView extends View {
 				break;
 			case MotionEvent.ACTION_MOVE:
 				if(oldChoose != c && listener != null){
-					if(c >= 0 && c< b.length){
-						listener.onTouchingLetterChanged(b[c]);
+					if(c >= 0 && c< letterSize){
+						listener.onTouchingLetterChanged(letters.get(c));
 						choose = c;
 						invalidate();
 					}
@@ -121,7 +138,8 @@ public class MyLetterListView extends View {
 	    if(textSize > 0) return;
 	    int fontHeight = 0;
 	    FontMetrics fm = null;
-	    textSize = paint.getTextSize();
+	    // 初始化为14
+	    textSize = 14;
 	    while(true) {
     	    paint.setTextSize(textSize);
     	    fm = paint.getFontMetrics();
@@ -133,5 +151,10 @@ public class MyLetterListView extends View {
     	        textSize += 0.5f;
     	    }
 	    }
+	    // 限制最大值
+	    if(textSize > 24) {
+	        textSize = 24;
+	    }
+	    paint.setTextSize(textSize);
 	}
 }
