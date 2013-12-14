@@ -7,7 +7,6 @@ import org.openintents.filemanager.util.MessageBus;
 import org.openintents.filemanager.util.MessageBus.MMessage;
 import org.openintents.intents.FileManagerIntents;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 
@@ -17,7 +16,6 @@ import android.os.Environment;
  * @author George Venios
  * 
  */
-@SuppressLint("DefaultLocale")
 public class SearchCore{
 	private String mQuery;
 	/** See {@link #setRoot(File)} */
