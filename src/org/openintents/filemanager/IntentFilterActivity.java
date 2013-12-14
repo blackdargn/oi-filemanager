@@ -85,8 +85,7 @@ public class IntentFilterActivity extends FragmentActivity {
 		// Multiselect
 		if (FileManagerIntents.ACTION_MULTI_SELECT.equals(intent.getAction())) {
 			String tag = "MultiSelectListFragment";
-			mFragment = (MultiselectListFragment) getSupportFragmentManager()
-					.findFragmentByTag(tag);
+			mFragment = (MultiselectListFragment) getSupportFragmentManager().findFragmentByTag(tag);
 
 			// Only add if it doesn't exist
 			if (mFragment == null) {
@@ -96,9 +95,7 @@ public class IntentFilterActivity extends FragmentActivity {
 				mFragment.setArguments(extras);
 
 				setTitle(R.string.multiselect_title);
-
-				getSupportFragmentManager().beginTransaction()
-						.add(R.id.containerLay, mFragment, tag).commit();
+				getSupportFragmentManager().beginTransaction().add(R.id.containerLay, mFragment, tag).commit();
 			}
 		}
 		// Item pickers
@@ -111,8 +108,7 @@ public class IntentFilterActivity extends FragmentActivity {
 			else
 				setTitle(R.string.pick_title);
 
-			mFragment = (PickFileListFragment) getSupportFragmentManager()
-					.findFragmentByTag(PickFileListFragment.class.getName());
+			mFragment = (PickFileListFragment) getSupportFragmentManager().findFragmentByTag(PickFileListFragment.class.getName());
 
 			// Only add if it doesn't exist
 			if (mFragment == null) {
